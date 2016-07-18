@@ -6,4 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.post('/',function(req,res){
+  var username = req.body.username;
+  console.log(username);
+  req.session.username = username;
+  res.redirect('/chat');
+});
 module.exports = router;
