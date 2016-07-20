@@ -1,3 +1,11 @@
+/*
+*  author: abhishek goswami (hiro)
+*  abhishekg785@gmail.com
+*
+*  socketFunctions.js file
+*  this file contains all the functions required in app.js for socket management
+*/
+
 var users = [],
     userSocketObject = {},
     userSocketIds = [];    /* array for storing users socketIDS */

@@ -32,6 +32,7 @@ module.exports = function(app,io){
 
   var routes = require('./routes/index');
   var chat = require('./routes/chat');
+  var channel = require('./routes/channel');
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -56,6 +57,7 @@ module.exports = function(app,io){
 
   app.use('/', routes);
   app.use('/chat',chat);
+  app.use('/channel',channel);
 
 
   // catch 404 and forward to error handler
@@ -70,8 +72,10 @@ module.exports = function(app,io){
   //it will get the username from the session cookie and store it in redis store and thus we can use the things later in our app
   io.use(function(socket, next){
     console.log('in the middleware');
-    var parseCookie = cookieParser(config.sessionSecret);
-    var handshake = socket.request;
+    var parseCookie = cookieParser(config.sessionSecret),
+        handshake = socket.request,
+        channelName = socket.handshake['query']['channelName'];
+
     parseCookie(handshake, null, function (err, data) {
       sessionService.get(handshake, function (err, session) {
         if(err){
@@ -106,6 +110,9 @@ module.exports = function(app,io){
   //we listen for the sockets connecting to the server here
   io.sockets.on('connection',function(socket){
     console.log(socket.username + ' ' + 'is connected');
+    var channelName = socket.handshake['query']['channelName'];
+    socket.join(channelName);
+    socket.channelName = channelName;
     socketFunctions.updateUsersInDOM(io);
 
     socket.on('disconnect', function(){
@@ -113,6 +120,11 @@ module.exports = function(app,io){
       console.log(socket.id);
       socketFunctions.userDisconnectUpdate(socket.username, socket);
       socketFunctions.updateUsersInDOM(io);
+    });
+
+    socket.on('new channel message', function(data){
+      var messageText = data.messageText;
+      io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
     });
 
     socket.on('new group message', function(data){
