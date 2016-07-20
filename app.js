@@ -89,13 +89,14 @@ module.exports = function(app,io){
         */
 
         sessionService.getUserName(handshake,function(err, username){
-          console.log('setting username');
           usernameIndex = socketFunctions.getUserIndex(username);
           if(usernameIndex == -1){
             socketFunctions.addNewUser(username);
-          }
-          socketFunctions.addNewUserSocketObject(username, socket);
+            //add the array for storing socketIDS in the userSocketIds array
+            socketFunctions.initializeUserSocketIds();
+            }
           socket.username = username;
+          socketFunctions.addNewUserSocketObject(username, socket);
           next();
         });
       });
@@ -105,13 +106,13 @@ module.exports = function(app,io){
   //we listen for the sockets connecting to the server here
   io.sockets.on('connection',function(socket){
     console.log(socket.username + ' ' + 'is connected');
-    console.log(socketFunctions.getUsersArray());
+    socketFunctions.updateUsersInDOM(io);
 
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
+      console.log(socket.id);
       socketFunctions.userDisconnectUpdate(socket.username, socket);
-      console.log('users array after disconnecting');
-      console.log(socketFunctions.getUsersArray());
+      socketFunctions.updateUsersInDOM(io);
     });
   });
 

@@ -7,11 +7,24 @@
   <title>Chat:Main</title>
 </head>
 <body>
-  <h><%= username %></h1>
+  <h1>h3ELLO:<%= username %></h1>
+  <h3>Online Users</h3>
+  <div id = 'onlineUsers'>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script>
-    var socket = io.connect();
+    var socket = io.connect(),
+        onlineUsers = $('#onlineUsers');
+    socket.on('update users', function(data){
+      onlineUsers.empty();
+      users = data.users;
+      for(var i = 0 ; i < users.length; i++){
+        console.log(users[i]);
+        var list = users[i] + '<br/>';
+        onlineUsers.append(list);
+      }
+    });
   </script>
 </body>
 </html>

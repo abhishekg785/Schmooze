@@ -1,5 +1,6 @@
 var users = [],
-    userSocketObject = [];
+    userSocketObject = {},
+    userSocketIds = [];    /* array for storing users socketIDS */
 
 var self = module.exports = {
 
@@ -9,33 +10,55 @@ var self = module.exports = {
   },
 
   addNewUserSocketObject : function(username, socket){
-    userSocketObject[username] = socket;
+    userIndex = self.getUserIndex(username);
+    userSocketIds[userIndex].push(socket.id);
+    console.log(userSocketIds);
   },
 
   getUserIndex : function(username){
-    index = users.indexOf(username);
+    var index = users.indexOf(username);
     if(index == -1){
       return -1;
     }
     return index;
   },
 
-  /* update the users and userSocketObject array on user disconnect */
+  initializeUserSocketIds : function(username){
+    userSocketIds.push([]);
+  },
+
+  /* update the users and userSocketObject array on user disconnect
+  *  remove the socket id of the user from the socketIDS array
+  *  if the socketIDS array becomes 0 for a username then remove the username from the users array
+   */
   userDisconnectUpdate : function(username, socket){
-    userIndex = self.getUserIndex(username);
-    console.log(userIndex);
+    var userIndex = self.getUserIndex(username);
     if(userIndex != -1){
-      users.splice(userIndex, 1);
-      delete userSocketObject[username];
+      var userSocketIdsArr = userSocketIds[userIndex],
+          socketIDIndex = userSocketIdsArr.indexOf(socket.id);
+      if(userSocketIdsArr.length == 1){
+        console.log('ONLY ONE TAB OPEN');
+        users.splice(userIndex, 1);
+        userSocketIds.splice(userIndex,1);
+        console.log(users);
+      }
+      else if(userSocketIdsArr.length > 0){     /* this means that the socketiD can be removed form the userSocketIds */
+        console.log('MORE THAN ONE TAB OPEN');
+      }
+      userSocketIdsArr.splice(socketIDIndex,1);
     }
+  },
+
+  updateUsersInDOM : function(io){
+    io.emit('update users', {'users' : users});
   },
 
   getUsersArray : function(){
     return users;
   },
 
-  getUserSocketObject : function(){
-    return userSocketObject;
+  getUserSocketIdArr : function(){
+    return userSocketIds;
   }
 
 }
