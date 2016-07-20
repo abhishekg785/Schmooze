@@ -13,6 +13,20 @@ module.exports = function(app,io){
   var cookieParser = require('cookie-parser');
   var bodyParser = require('body-parser');
   var session = require('express-session');
+  var cookie = require('cookie');
+  var connect = require('connect');
+  var config = require('./config');
+
+
+  /* redis part */
+  var redis = require('redis');
+  var redisClient = redis.createClient();
+  var RedisStore = require('connect-redis')(session);
+  var redisStore = new RedisStore({ client: redisClient });
+
+  /* other redis stuff */
+  var sessionService = require('./shared/session-service');
+  sessionService.initializeRedis(redisClient, redisStore);
 
   var routes = require('./routes/index');
   var chat = require('./routes/chat');
@@ -27,14 +41,20 @@ module.exports = function(app,io){
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(cookieParser());
+  app.use(cookieParser(config.sessionSecret));
   app.use(session({
-    secret:'life_is_strange'
+    store: redisStore,
+    secret: config.sessionSecret,
+    resave: true,
+    saveUninitialized: true,
+    key:config.sessionCookieKey
   }));
   app.use(express.static(path.join(__dirname, 'public')));
 
+
   app.use('/', routes);
   app.use('/chat',chat);
+
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -44,13 +64,34 @@ module.exports = function(app,io){
   });
 
   //socket connections
-  //socket.io authorization
-  io.set('authorization', function(handshakeData, accept){
-    console.log('auth');
+  //socket.io middleware
+  io.use(function(socket, next){
+    console.log('in the middleware');
+    var parseCookie = cookieParser(config.sessionSecret);
+    var handshake = socket.request;
+    parseCookie(handshake, null, function (err, data) {
+      sessionService.get(handshake, function (err, session) {
+        if(err){
+          console.log(err);
+        }
+        if(!session){
+          console.log('no session');
+        }
+        handshake.session = session;
+        sessionService.getUserName(handshake,function(err, username){
+          console.log(username);
+          socket.username = username;
+          console.log('username set in socket');
+          next();
+        });
+      });
+    });
   });
+
 
   //we listen for the sockets connecting to the server here
   io.sockets.on('connection',function(socket){
+    console.log(socket.username + 'connection');
   });
 
   // error handlers
