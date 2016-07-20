@@ -6,6 +6,7 @@
 */
 
 var express = require('express');
+
 module.exports = function(app,io){
   var path = require('path');
   var favicon = require('serve-favicon');
@@ -26,6 +27,7 @@ module.exports = function(app,io){
 
   /* other redis stuff */
   var sessionService = require('./shared/session-service');
+  var socketFunctions = require('./shared/socketFunctions');
   sessionService.initializeRedis(redisClient, redisStore);
 
   var routes = require('./routes/index');
@@ -65,6 +67,7 @@ module.exports = function(app,io){
 
   //socket connections
   //socket.io middleware
+  //it will get the username from the session cookie and store it in redis store and thus we can use the things later in our app
   io.use(function(socket, next){
     console.log('in the middleware');
     var parseCookie = cookieParser(config.sessionSecret);
@@ -77,24 +80,38 @@ module.exports = function(app,io){
         if(!session){
           console.log('no session');
         }
-        handshake.session = session;
+        handshake.session = session;   //setting handshake.session equal to the session we fetched using cookie id which is further fetched from cookie using cookieParser
+
+        /*
+        * get username from the session using getUserName from sessionService
+        * store it in the socket.username
+        * check if user exists in users array: if exists then do not append into the array else vice versa
+        */
+
         sessionService.getUserName(handshake,function(err, username){
-          console.log(username);
+          console.log('setting username');
+          usernameIndex = socketFunctions.getUserIndex(username);
+          if(usernameIndex == -1){
+            socketFunctions.addNewUser(username);
+          }
+          socketFunctions.addNewUserSocketObject(username, socket);
           socket.username = username;
-          console.log('username set in socket');
           next();
         });
       });
     });
   });
 
-
   //we listen for the sockets connecting to the server here
   io.sockets.on('connection',function(socket){
-    console.log(socket.username + 'connection');
-  });
+    console.log(socket.username + ' ' + 'is connected');
+    console.log(socketFunctions.getUsersArray());
 
-  // error handlers
+    socket.on('disconnect', function(){
+      console.log(socket.username + 'disconnected');
+      socketFunctions.userDisconnectUpdate(socket.username, socket);
+    });
+  });
 
   // development error handler
   // will print stacktrace

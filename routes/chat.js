@@ -17,7 +17,7 @@ function check_login(req,res,next){
   next();
 }
 
-router.get('/',function(req,res){
+router.get('/',check_login,function(req,res){
   var username = req.session.username;
   console.log(req.session.username);
   res.render('chat/main.html',{'username':username});

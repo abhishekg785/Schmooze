@@ -1,8 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+/* middleware for checking user is logged in or not */
+
+function check_login(req,res,next){
+  if(req.session.username){
+    res.redirect('/chat');
+  }
+  next();
+}
+
+router.get('/', check_login, function(req, res, next) {
   res.render('index');
 });
 
