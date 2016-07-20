@@ -114,6 +114,11 @@ module.exports = function(app,io){
       socketFunctions.userDisconnectUpdate(socket.username, socket);
       socketFunctions.updateUsersInDOM(io);
     });
+
+    socket.on('new group message', function(data){
+      messageText = data.messageText;
+      io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
+    });
   });
 
   // development error handler
