@@ -25,7 +25,7 @@ var self = module.exports = {
     userIndex = self.getUserIndex(username);
     console.log(userIndex);
     if(userIndex != -1){
-      users.splice(username, 1);
+      users.splice(userIndex, 1);
       delete userSocketObject[username];
     }
   },

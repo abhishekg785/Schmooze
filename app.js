@@ -110,6 +110,8 @@ module.exports = function(app,io){
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
       socketFunctions.userDisconnectUpdate(socket.username, socket);
+      console.log('users array after disconnecting');
+      console.log(socketFunctions.getUsersArray());
     });
   });
 

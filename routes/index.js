@@ -21,4 +21,10 @@ router.post('/',function(req,res){
   console.log(req.session);
   res.redirect('/chat');
 });
+
+router.get('/logout',function(req,res){
+  req.session.destroy();
+  res.redirect('/');
+});
+
 module.exports = router;
