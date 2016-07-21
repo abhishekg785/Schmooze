@@ -15,12 +15,15 @@
   </style>
 </head>
 <body>
-  <a href = '/channel/github'>Github</a>
-  <a href = '/channel/python'>Python</a>
-  <!-- <button id = 'channelButton'>Create your own channel</button><br/>
+  <% channels.forEach(function(channel){ %>
+    <a href = '/channel/<%= channel %>'><%= channel %></a><br/>
+  <% }) %>
+  <h1></h1>
+  Available channels<br/>
+  <button id = 'channelButton'>Create your own channel</button><br/>
   <form id = 'createChannelForm' method = 'post'>
-    <input type="text" name = 'channelName' id = 'channelName'/><br/>
-    <input type="text" name = 'channelDesc' id = 'channelDesc' /><br/>
+    <input type="text" name = 'channelName' id = 'channelName' placeholder="Enter Channel Room"/><br/>
+    <input type="text" name = 'channelDesc' id = 'channelDesc' placeholder="Give Channel Description"/><br/>
     <input type="submit" id = 'createChannel' />
   </form>
 <% include footer.html %>
@@ -28,8 +31,8 @@
   var channelButton = $('#channelButton'),
       createChannelForm = $('#createChannelForm');
   channelButton.on('click', function(){
-    alert('dcdcdklcnd');
+    createChannelForm.toggle();
   });
-</script> -->
+</script>
 </body>
 </html>

@@ -27,7 +27,7 @@ module.exports = function(app,io){
   var redisStore = new RedisStore({ client: redisClient });
 
   /* mongodb connection */
-  mongoose.connect('mongodb://localhost', function(err){
+  mongoose.connect('mongodb://localhost/schmooze', function(err){
     if(!err){
       console.log('connected to database');
     }
