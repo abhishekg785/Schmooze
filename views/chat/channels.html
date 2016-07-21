@@ -8,10 +8,28 @@
 <html>
 <head>
   <title>Channels</title>
+  <style>
+    #createChannelForm{
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <button>Create your own channel</button><br/>
-  <a href = '/channel/github'>Github</a><br/>
+  <a href = '/channel/github'>Github</a>
   <a href = '/channel/python'>Python</a>
+  <!-- <button id = 'channelButton'>Create your own channel</button><br/>
+  <form id = 'createChannelForm' method = 'post'>
+    <input type="text" name = 'channelName' id = 'channelName'/><br/>
+    <input type="text" name = 'channelDesc' id = 'channelDesc' /><br/>
+    <input type="submit" id = 'createChannel' />
+  </form>
+<% include footer.html %>
+<script>
+  var channelButton = $('#channelButton'),
+      createChannelForm = $('#createChannelForm');
+  channelButton.on('click', function(){
+    alert('dcdcdklcnd');
+  });
+</script> -->
 </body>
 </html>

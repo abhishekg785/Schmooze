@@ -17,13 +17,24 @@ module.exports = function(app,io){
   var cookie = require('cookie');
   var connect = require('connect');
   var config = require('./config');
-
+  var mongoose = require('mongoose');
+  var flash = require('connect-flash');
 
   /* redis part */
   var redis = require('redis');
   var redisClient = redis.createClient();
   var RedisStore = require('connect-redis')(session);
   var redisStore = new RedisStore({ client: redisClient });
+
+  /* mongodb connection */
+  mongoose.connect('mongodb://localhost', function(err){
+    if(!err){
+      console.log('connected to database');
+    }
+    else{
+      console.log('Error' + err);
+    }
+  });
 
   /* other redis stuff */
   var sessionService = require('./shared/session-service');
@@ -52,6 +63,7 @@ module.exports = function(app,io){
     saveUninitialized: true,
     key:config.sessionCookieKey
   }));
+  app.use(flash());
   app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -110,15 +122,34 @@ module.exports = function(app,io){
   //we listen for the sockets connecting to the server here
   io.sockets.on('connection',function(socket){
     console.log(socket.username + ' ' + 'is connected');
+
+    /*
+    *  manage channel part here
+    *  push channel name into the channels array and make the push [] into the channelUsers
+    *  for storing users in a particular channel
+    *  check if channel exists in the channels array i.e index != -1 and if does not exists then take the above steps
+    */
     var channelName = socket.handshake['query']['channelName'];
-    socket.join(channelName);
-    socket.channelName = channelName;
+    console.log(channelName);
+    if(channelName){
+      console.log('SETTING DATA FOR CHANNEL');
+      socket.join(channelName);
+      socket.channelName = channelName;
+      var channelIndex = socketFunctions.getChannelIndex(socket.channelName);
+      if(channelIndex == -1){
+        socketFunctions.addNewChannel(socket.channelName);
+        socketFunctions.initializeChannelUsersArray();
+      }
+      socketFunctions.addUserToChannel(socket);
+    }
+
+    socketFunctions.printAllArrays();
     socketFunctions.updateUsersInDOM(io);
 
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
-      console.log(socket.id);
       socketFunctions.userDisconnectUpdate(socket.username, socket);
+      socketFunctions.userDisConnectFromChannel(socket);
       socketFunctions.updateUsersInDOM(io);
     });
 
