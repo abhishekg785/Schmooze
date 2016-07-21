@@ -48,6 +48,7 @@ var self = module.exports = {
         console.log('ONLY ONE TAB OPEN');
         users.splice(userIndex, 1);
         userSocketIds.splice(userIndex,1);
+        // socket.leave(socket.channelName);
       }
       else if(userSocketIdsArr.length > 0){     /* this means that the socketiD can be removed form the userSocketIds */
         console.log('MORE THAN ONE TAB OPEN');
@@ -115,10 +116,18 @@ var self = module.exports = {
         console.log('RESULT OF K IS' + result);
         if(result == 0){  /* no socket connection exists b/w user and server */
           channelUsers[channelIndex].splice(userIndex, 1);
+          // socket.leave(channelName);
         }
       }
     }
     self.printAllArrays();
+  },
+
+  /*get the channel users */
+  updateUserInChannelDOM : function(io, socket){
+    var channelIndex = self.getChannelIndex(socket.channelName),
+        usersInChannel = channelUsers[channelIndex];
+    io.sockets.in(socket.channelName).emit('channel user update', {'users':usersInChannel});
   },
 
   /*

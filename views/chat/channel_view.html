@@ -11,14 +11,21 @@
   <title><%= channelName %></title>
 </head>
 <body>
-  <textarea id = 'messageText'></textarea>
+  <h1>Welcome to the channel "<%= channelName %>"</h1>
+  <p><%= channelDescription %></p>
+  <p>by:<%= channelOwner %></p>
+  <textarea id = 'messageText'></textarea><br/>
   <button id = 'sendMessage'>Send Message</button>
+  <div id = 'channelChatArea'></div>
+  <div id = 'channelOnlineUsers'></div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script>
     var channelName = "<%= channelName %>",
         messageText = $('#messageText'),
-        sendMessage = $('#sendMessage');
+        sendMessage = $('#sendMessage'),
+        channelChatArea = $('#channelChatArea'),
+        channelOnlineUsers = $('#channelOnlineUsers');
 
     var Functions = {
       socketConnect : function(channelName){
@@ -36,11 +43,24 @@
       }
       else{
         socket.emit('new channel message', {'messageText' : messageText});
+        $('#messageText').val('');
       }
     });
 
     socket.on('new channel message', function(data){
-      console.log(data);
+      var sender = data.sender,
+          messageText = data.messageText,
+          item = sender + ':' + messageText + '<br/>';
+      channelChatArea.append(item);
+    });
+
+    socket.on('channel user update', function(data){
+      channelOnlineUsers.empty();
+      var users = data.users;
+      users.forEach(function(user){
+        var item = user + '<br/>';
+        channelOnlineUsers.append(item);
+      });
     });
   </script>
 </body>

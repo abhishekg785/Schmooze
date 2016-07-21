@@ -11,7 +11,6 @@ router.get('/', function(req,res){
   });
 });
 
-/* get channels from the model and once it gets the data it callbacks to render the page */
 function getChannels(callback){
   var channelQuery = ChannelModel.distinct('channelName');
   channelQuery.exec(function(err, data){
@@ -32,17 +31,21 @@ router.post('/', function(req, res){
   res.redirect('/channel');
 });
 
-/*
-* middleware for checking that the user should be allowed to enter only in the
-* channels that exists
-*/
+/* check if the channel exists or not */
 
-function checkChannel(req, res, next){
-  ChannelModel.find({})
-}
 router.get('/:channel', function(req,res){
   var channel = req.params.channel;
-  res.render('chat/channel_view', {'channelName':channel});
+  ChannelModel.find({'channelName' : channel}).exec(function(err, data){
+    if(!data.length){
+      res.render('chat/channel404', {'channelName': channel});
+    }
+    else{
+      var channelDescription = data[0].channelDescription,
+          channelOwner = data[0].channelOwner,
+          channelName = data[0].channelName;
+      res.render('chat/channel_view', {'channelName':channelName, 'channelDescription':channelDescription, 'channelOwner':channelOwner});
+    }
+  });
 });
 
 module.exports = router;

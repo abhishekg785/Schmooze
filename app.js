@@ -145,12 +145,14 @@ module.exports = function(app,io){
 
     socketFunctions.printAllArrays();
     socketFunctions.updateUsersInDOM(io);
+      socketFunctions.updateUserInChannelDOM(io, socket);
 
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
       socketFunctions.userDisconnectUpdate(socket.username, socket);
       socketFunctions.userDisConnectFromChannel(socket);
       socketFunctions.updateUsersInDOM(io);
+      socketFunctions.updateUserInChannelDOM(io, socket);
     });
 
     socket.on('new channel message', function(data){
