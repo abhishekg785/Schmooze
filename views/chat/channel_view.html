@@ -62,6 +62,10 @@
         channelOnlineUsers.append(item);
       });
     });
+
+    socket.on('set channel messages' , function(data){
+      console.log(data);
+    });
   </script>
 </body>
 </html>

@@ -142,11 +142,13 @@ module.exports = function(app,io){
         socketFunctions.initializeChannelUsersArray();
       }
       socketFunctions.addUserToChannel(socket);
+      socketFunctions.setChannelMessageInDOM(io, socket.channelName);
     }
 
     socketFunctions.printAllArrays();
     socketFunctions.updateUsersInDOM(io);
-      socketFunctions.updateUserInChannelDOM(io, socket);
+    socketFunctions.setGroupMessagesInDOM(socket);
+    socketFunctions.updateUserInChannelDOM(io, socket);
 
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
@@ -159,11 +161,13 @@ module.exports = function(app,io){
     socket.on('new channel message', function(data){
       var messageText = data.messageText;
       io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
+      socketFunctions.channelMessageHandler(socket, data);
     });
 
     socket.on('new group message', function(data){
       messageText = data.messageText;
       io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
+      socketFunctions.groupMessageHandler(socket, data);
     });
   });
 

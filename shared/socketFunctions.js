@@ -6,6 +6,9 @@
 *  this file contains all the functions required in app.js for socket management
 */
 
+var GroupMessageModel = require('../models/GroupMessageModel');
+var ChannelMessageModel = require('../models/ChannelMessageModel');
+
 var users = [],
     userSocketIds = [],   /* array for storing users socketIDS */
     channels = [],        /* array containing channels */
@@ -157,6 +160,71 @@ var self = module.exports = {
 
   updateUsersInDOM : function(io){
     io.emit('update users', {'users' : users});
+  },
+
+  /*
+  *  message handler for channels
+  *  fields to store are : username, messageText, channelName, date(deafult)
+  */
+  channelMessageHandler : function(socket, data){
+    var newChannelMessage = ChannelMessageModel({
+      username : socket.username,
+      messageText : data.messageText,
+      channelName : socket.channelName,
+    });
+    newChannelMessage.save(function(err, data){
+      console.log(data);
+    });
+  },
+
+  groupMessageHandler : function(socket, data){
+    var newGroupMessage = GroupMessageModel({
+      username : socket.username,
+      messageText : data.messageText,
+    });
+    newGroupMessage.save(function(err, data){
+      console.log(data);
+    });
+  },
+
+  getChannelMessages: function(channelName, callback){
+    var query = ChannelMessageModel.find({'channelName' : channelName});
+    query.exec(function(err, data){
+      if(!err){
+        callback(data);
+      }
+      else{
+        console.log(err);
+        callback(false);
+      }
+    })
+  },
+
+  getGroupMessages : function(callback){
+    var query = GroupMessageModel.find({}).sort('-date');
+    query.exec(function(err, data){
+      if(!err){
+        callback(data);
+      }
+      else{
+        console.log('error occured');
+        callback(false);
+      }
+    });
+  },
+
+  setGroupMessagesInDOM : function(socket){
+    console.log('GROUP MESSAGESS');
+    var groupMessages = self.getGroupMessages(function(data){
+      // console.log(data);
+      socket.emit('set group message', {'messages' : data});
+    });
+  },
+
+  setChannelMessageInDOM : function(io, channelName){
+    self.getChannelMessages(channelName, function(data){
+      io.sockets.in(channelName).emit('set channel messages', {'messages' : data});
+    });
   },
 
   getUsersArray : function(){

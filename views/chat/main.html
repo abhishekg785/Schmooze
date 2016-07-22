@@ -55,6 +55,11 @@
           item = sender + ':' + messageText + '<br/>';
       groupMessages.append(item);
     });
+
+    socket.on('set group message', function(data){
+      console.log(data);
+    });
+
   </script>
 </body>
 </html>
