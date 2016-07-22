@@ -188,7 +188,7 @@ var self = module.exports = {
   },
 
   getChannelMessages: function(channelName, callback){
-    var query = ChannelMessageModel.find({'channelName' : channelName});
+    var query = ChannelMessageModel.find({'channelName' : channelName}).sort('-date');
     query.exec(function(err, data){
       if(!err){
         callback(data);
