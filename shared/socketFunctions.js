@@ -53,8 +53,9 @@ var self = module.exports = {
       else if(userSocketIdsArr.length > 0){     /* this means that the socketiD can be removed form the userSocketIds */
         console.log('MORE THAN ONE TAB OPEN');
       }
-      userSocketIdsArr.splice(socketIDIndex,1);
     }
+    userSocketIdsArr.splice(socketIDIndex,1);
+    self.printAllArrays();
   },
 
   getChannelIndex : function(channelName){
@@ -101,12 +102,13 @@ var self = module.exports = {
         username = socket.username,
         socketID = socket.id;
     /* remove user from channelUserSocketIDs */
-    var socketidIndex = channelUserSocketIDs.indexOf(socketID);
+    // var socketidIndex = channelUserSocketIDs.indexOf(socketID);
     var channelIndex = self.getChannelIndex(channelName);
     var userIndex = self.getUserIndex(username);
     var channelUserSocketIdArr = channelUserSocketIDs[channelIndex];
     if(channelUserSocketIdArr != undefined){
       if(channelUserSocketIDs[channelIndex].length > 0){
+        var socketidIndex = channelUserSocketIdArr.indexOf(socket.id);     /* get the index of the connection to be removed */
         channelUserSocketIDs[channelIndex].splice(socketidIndex, 1);
         var userSocketIdsArr = userSocketIds[userIndex];
         if(userSocketIdsArr == undefined || channelUserSocketIdArr == undefined){ /* means all socket connections closed */
@@ -179,6 +181,7 @@ var self = module.exports = {
 
   printAllArrays : function(){
     console.log('ACTUAL VALUES OF ARRAY');
+    console.log(users);
     console.log(userSocketIds);
     console.log(channels);
     console.log(channelUsers);

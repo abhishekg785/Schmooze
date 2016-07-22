@@ -112,6 +112,7 @@ module.exports = function(app,io){
             socketFunctions.initializeUserSocketIds();
             }
           socket.username = username;
+          socket.id = socket.id;
           socketFunctions.addNewUserSocketObject(username, socket);
           next();
         });
@@ -149,8 +150,8 @@ module.exports = function(app,io){
 
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
-      socketFunctions.userDisconnectUpdate(socket.username, socket);
       socketFunctions.userDisConnectFromChannel(socket);
+      socketFunctions.userDisconnectUpdate(socket.username, socket);
       socketFunctions.updateUsersInDOM(io);
       socketFunctions.updateUserInChannelDOM(io, socket);
     });
