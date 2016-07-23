@@ -5,61 +5,49 @@
   main.html
 -->
 <html>
-<head>
-  <title>Chat:Main</title>
-</head>
-<body>
-  <h1>h3ELLO:<%= username %></h1>
-  <h3>Online Users</h3>
-  <div id = 'onlineUsers'>
-  </div>
-  <div id = 'chatSection'>
-    <textarea id = 'messageText'></textarea>
-    <button id = 'sendMessage'>Send message</button>
-    <div id = 'groupMessages'>
-    </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script>
-    var socket = io.connect(),
-        onlineUsers = $('#onlineUsers'),
-        chatSection = $('#chatSection'),
-        sendMessage = $('#sendMessage'),
-        messageText = $('#messageText'),
-        groupMessages = $('#groupMessages');
-
-    socket.on('update users', function(data){
-      onlineUsers.empty();
-      users = data.users;
-      for(var i = 0 ; i < users.length; i++){
-        console.log(users[i]);
-        var list = users[i] + '<br/>';
-        onlineUsers.append(list);
-      }
-    });
-
-    sendMessage.on('click', function(e){
-      var messageText = $('#messageText').val();
-      if(messageText == ''){
-        alert('message field is required');
-      }
-      else{
-        socket.emit('new group message', {'messageText':messageText});
-      }
-    });
-
-    socket.on('new group message', function(data){
-      var sender = data.sender,
-          messageText = data.messageText;
-          item = sender + ':' + messageText + '<br/>';
-      groupMessages.append(item);
-    });
-
-    socket.on('set group message', function(data){
-      console.log(data);
-    });
-
-  </script>
-</body>
+	<head>
+		<title>Schmooze:Global Chat</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+  <body>
+    <section id = 'chatArea'>
+			<div id = 'chatHeading'>Global Chat Platform : Everything you message here will be received by each online users, So use it for broadcasting purposes :)</div>
+			<div id = 'chatDisplay'>
+			</div>
+    </section>
+    <section id = 'onlineUserArea'>
+			<div id = 'onlineUserHead'>Online Users</div>
+			<div id = 'usersDisplay'></div>
+    </section>
+    <section id = 'channelArea'>
+			<div id = 'channelHeading'>
+				<h2><%= username %></h2>
+			</div>
+			<div id = 'channelDisplay'>
+				<span id = 'channelListHeading'>Available Channels(<%= channels.length %>)</span>
+				<div id = 'channelList'>
+					<% channels.forEach(function(channel){ %>
+						<span><a href = '/channel/<%= channel.channelName %>'><%= channel.channelName %></a></span>
+					<% }); %>
+				</div>
+				<span><a href = '/logout'>Logout</a></span>
+			</div>
+    </section>
+    <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
+		<div id = 'sendMessage'>Send</div>
+  </body>
+  <% include footer.html %>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script src = '/js/globalChat.js'></script>
+	<script>
+	  var channelListHeading = $('#channelListHeading'),
+		    channelList = $('#channelList');
+	  channelListHeading.click(function(){
+			channelList.toggle(function(){
+				channelList.css('height', '40%');
+			});
+		});
+	</script>
 </html>

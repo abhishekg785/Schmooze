@@ -8,6 +8,7 @@
 
 var GroupMessageModel = require('../models/GroupMessageModel');
 var ChannelMessageModel = require('../models/ChannelMessageModel');
+var ChannelModel = require('../models/channelSchema');
 
 var users = [],
     userSocketIds = [],   /* array for storing users socketIDS */
@@ -188,7 +189,7 @@ var self = module.exports = {
   },
 
   getChannelMessages: function(channelName, callback){
-    var query = ChannelMessageModel.find({'channelName' : channelName}).sort('-date');
+    var query = ChannelMessageModel.find({'channelName' : channelName});
     query.exec(function(err, data){
       if(!err){
         callback(data);
@@ -201,7 +202,7 @@ var self = module.exports = {
   },
 
   getGroupMessages : function(callback){
-    var query = GroupMessageModel.find({}).sort('-date');
+    var query = GroupMessageModel.find({});
     query.exec(function(err, data){
       if(!err){
         callback(data);
@@ -213,10 +214,17 @@ var self = module.exports = {
     });
   },
 
+  getChannelDetails : function(channelName, callback){
+    console.log('IN THE CHANNEL DETAILS');
+    var query = ChannelModel.find({ 'channelName' : channelName });
+    query.exec(function(err, data){
+      callback(data);
+    });
+  },
+
   setGroupMessagesInDOM : function(socket){
     console.log('GROUP MESSAGESS');
     var groupMessages = self.getGroupMessages(function(data){
-      // console.log(data);
       socket.emit('set group message', {'messages' : data});
     });
   },
@@ -227,6 +235,13 @@ var self = module.exports = {
     });
   },
 
+  setChannelsInDOM : function(io, socket){
+    var channelName = socket.channelName;
+    this.getChannels(function(data){
+      io.sockets.in(channelName).emit('set channels', {'channels' : data});
+    })
+  },
+
   getUsersArray : function(){
     return users;
   },
@@ -235,8 +250,15 @@ var self = module.exports = {
     return userSocketIds;
   },
 
-  getChannels : function(){
-    return channels;
+  getChannels : function(callback){
+    ChannelModel.find({}).exec(function(err, data){
+      if(!err){
+        callback(data);
+      }
+      else{
+        callback(false);
+      }
+    });
   },
 
   getChannelUsers : function(){

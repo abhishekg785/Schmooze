@@ -4,35 +4,74 @@
 
   template for having access to available channels and to create own channel for discussions
 -->
-
 <html>
-<head>
-  <title>Channels</title>
-  <style>
-    #createChannelForm{
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <% channels.forEach(function(channel){ %>
-    <a href = '/channel/<%= channel %>'><%= channel %></a><br/>
-  <% }) %>
-  <h1></h1>
-  Available channels<br/>
-  <button id = 'channelButton'>Create your own channel</button><br/>
-  <form id = 'createChannelForm' method = 'post'>
-    <input type="text" name = 'channelName' id = 'channelName' placeholder="Enter Channel Room"/><br/>
-    <input type="text" name = 'channelDesc' id = 'channelDesc' placeholder="Give Channel Description"/><br/>
-    <input type="submit" id = 'createChannel' />
-  </form>
-<% include footer.html %>
-<script>
-  var channelButton = $('#channelButton'),
-      createChannelForm = $('#createChannelForm');
-  channelButton.on('click', function(){
-    createChannelForm.toggle();
-  });
-</script>
-</body>
+	<head>
+		<title>Schmooze:Login</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+  <body>
+    <section id="sidebar">
+      <div class="inner">
+        <nav>
+          <ul>
+            <li><a href="#two">Channels</a></li>
+            <li><a href="#three">Create a Channel</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+		<div id="wrapper">
+      <section id="two" class="wrapper style3 fade-up">
+        <div class="inner">
+        	<h2>Channels</h2>
+        			<p>Click on the link of the available channels to enter into the channel</p>
+        			<div class="features">
+                <% if(channels.length > 0){ %>
+                  <% channels.forEach(function(channel){ %>
+                    <section>
+          					  <h3><a href = '/channel/<%= channel.channelName %>'><%= channel.channelName %></a></h3>
+          					  <p><%= channel.channelDescription %></p>
+          				  </section>
+                  <% }) %>
+                  <% } else{ %>
+                    <h1>No Channels Yet :)</h1>
+                  <% } %>
+        			</div>
+        </div>
+      </section>
+      <!-- Three -->
+					<section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Create a Channel</h2>
+							<p>Create your own channel for discussion and invite others !</p>
+								<section>
+									<form method="post" action="/channel">
+										<div class="field half first">
+											<input type="text" name="channelName" id="channelName" placeholder="Give name to your channel"/>
+										</div>
+                    <br/>
+										<div class="field">
+											<textarea name="channelDesc" id="channelDesc" rows="5" placeholder="Give small info about the channel"></textarea>
+										</div>
+										<ul class="actions">
+											<li><input type = 'submit' value = 'Create'/></li>
+										</ul>
+									</form>
+								</section>
+						</div>
+					</section>
+
+			</div>
+    </div>
+			<script src="/js/jquery.min.js"></script>
+			<script src="/js/jquery.scrollex.min.js"></script>
+			<script src="/js/jquery.scrolly.min.js"></script>
+			<script src="/js/skel.min.js"></script>
+			<script src="/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="/js/main.js"></script>
+  </body>
 </html>

@@ -5,67 +5,48 @@
   channel_view.html
   the page is used to connect a user to a particular available channels
 -->
-
 <html>
-<head>
-  <title><%= channelName %></title>
-</head>
-<body>
-  <h1>Welcome to the channel "<%= channelName %>"</h1>
-  <p><%= channelDescription %></p>
-  <p>by:<%= channelOwner %></p>
-  <textarea id = 'messageText'></textarea><br/>
-  <button id = 'sendMessage'>Send Message</button>
-  <div id = 'channelChatArea'></div>
-  <div id = 'channelOnlineUsers'></div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script>
-    var channelName = "<%= channelName %>",
-        messageText = $('#messageText'),
-        sendMessage = $('#sendMessage'),
-        channelChatArea = $('#channelChatArea'),
-        channelOnlineUsers = $('#channelOnlineUsers');
-
-    var Functions = {
-      socketConnect : function(channelName){
-        return io('localhost:3000', {
-          query : 'channelName=' + channelName
-        });
-      }
-    }
-
-    var socket = Functions.socketConnect(channelName);
-    sendMessage.on('click', function(){
-      messageText = $('#messageText').val();
-      if(messageText == ''){
-        alert('meessage is required');
-      }
-      else{
-        socket.emit('new channel message', {'messageText' : messageText});
-        $('#messageText').val('');
-      }
-    });
-
-    socket.on('new channel message', function(data){
-      var sender = data.sender,
-          messageText = data.messageText,
-          item = sender + ':' + messageText + '<br/>';
-      channelChatArea.append(item);
-    });
-
-    socket.on('channel user update', function(data){
-      channelOnlineUsers.empty();
-      var users = data.users;
-      users.forEach(function(user){
-        var item = user + '<br/>';
-        channelOnlineUsers.append(item);
-      });
-    });
-
-    socket.on('set channel messages' , function(data){
-      console.log(data);
-    });
-  </script>
-</body>
+	<head>
+		<title>Schmooze:<%= channelName %></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+  <body>
+    <section id = 'chatArea'>
+			<div id = 'chatHeading'>Welcome to the channel "<%= channelName %>" : <%= channelDescription %></div>
+			<div id = 'chatDisplay'>
+			</div>
+    </section>
+    <section id = 'onlineUserArea'>
+			<div id = 'onlineUserHead'>Online Users</div>
+			<div id = 'usersDisplay'></div>
+    </section>
+    <section id = 'channelArea'>
+			<div id = 'channelHeading'>
+				<h2><%= username %></h2>
+			</div>
+			<div id = 'channelDisplay'>
+				<span id = 'channelListHeading'>Available Channels</span>
+				<div id = 'channelList'>
+				</div>
+				<span><a href = '/logout'>Logout</a></span>
+			</div>
+    </section>
+    <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
+		<div id = 'sendMessage'>Send</div>
+    <input type="hidden" value = "<%= channelName %>" id = 'channelName' />
+  </body>
+  <% include footer.html %>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src = "/js/channel/channel.js"></script>
+	<script>
+	  var channelListHeading = $('#channelListHeading'),
+		    channelList = $('#channelList');
+	  channelListHeading.click(function(){
+			channelList.toggle(function(){
+				channelList.css('height', '40%');
+			});
+		});
+	</script>
 </html>

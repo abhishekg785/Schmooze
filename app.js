@@ -149,6 +149,7 @@ module.exports = function(app,io){
     socketFunctions.updateUsersInDOM(io);
     socketFunctions.setGroupMessagesInDOM(socket);
     socketFunctions.updateUserInChannelDOM(io, socket);
+    socketFunctions.setChannelsInDOM(io, socket);
 
     socket.on('disconnect', function(){
       console.log(socket.username + 'disconnected');
@@ -156,6 +157,7 @@ module.exports = function(app,io){
       socketFunctions.userDisconnectUpdate(socket.username, socket);
       socketFunctions.updateUsersInDOM(io);
       socketFunctions.updateUserInChannelDOM(io, socket);
+      socketFunctions.setChannelsInDOM(io, socket);
     });
 
     socket.on('new channel message', function(data){
