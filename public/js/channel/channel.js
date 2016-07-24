@@ -9,24 +9,34 @@ var channelName = $('#channelName').val(),
     // loggedUser = $('#loggedUser').val();
 
 
-var Functions = {
+var ChannelFunctions = {
   socketConnect : function(channelName){
     return io('localhost:3000', {
       query : 'channelName=' + channelName
     });
+  },
+
+  sendMessage : function(){
+    var messageText = $('#messageText').val();
+    if(messageText == ''){
+      alert('Message Field is required!');
+    }
+    else{
+      socket.emit('new channel message', {'messageText' : messageText});
+      $('#messageText').val('');
+    }
   }
 }
 
-var socket = Functions.socketConnect(channelName);
+var socket = ChannelFunctions.socketConnect(channelName);
 
 sendMessage.on('click', function(){
-  messageText = $('#messageText').val();
-  if(messageText == ''){
-    alert('meessage is required');
-  }
-  else{
-    socket.emit('new channel message', {'messageText' : messageText});
-    $('#messageText').val('');
+  ChannelFunctions.sendMessage();
+});
+
+messageText.on('keypress', function(e){
+  if(e.keyCode == 13){
+    ChannelFunctions.sendMessage();
   }
 });
 

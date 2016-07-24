@@ -8,7 +8,6 @@
       chatDisplay = $('#chatDisplay'),
       usersDisplay = $('#usersDisplay');
 
-
   var GlobalChatFunctions = {
     sendMessage : function(){
       var messageText = $('#messageText').val();
