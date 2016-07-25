@@ -8,27 +8,29 @@ var self = module.exports = {
         redisClient = client;
         redisStore = store;
     },
+
     getSessionId: function (handshake) {
       console.log('getting sessionId');
         return handshake.signedCookies[config.sessionCookieKey];
     },
+
     get: function (handshake, callback) {
         var sessionId = self.getSessionId(handshake);
-        console.log(sessionId);
         self.getSessionBySessionID(sessionId, function (err, session) {
             if (err) callback(err);
             if (callback != undefined)
                 callback(null, session);
         });
     },
+
     getSessionBySessionID: function (sessionId, callback) {
-      console.log('loading into redis');
         redisStore.load(sessionId, function (err, session) {
             if (err) callback(err);
             if (callback != undefined)
                 callback(null, session);
         });
     },
+
     getUserName: function (handshake, callback) {
         self.get(handshake, function (err, session) {
             if (err) callback(err);
@@ -38,6 +40,7 @@ var self = module.exports = {
                 callback(null);
         });
     },
+
     updateSession: function (session, callback) {
         try {
             session.reload(function () {
@@ -49,6 +52,7 @@ var self = module.exports = {
             callback(err);
         }
     },
+
     setSessionProperty: function (session, propertyName, propertyValue, callback) {
         session[propertyName] = propertyValue;
         self.updateSession(session, callback);

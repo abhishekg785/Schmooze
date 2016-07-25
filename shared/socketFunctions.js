@@ -9,6 +9,7 @@
 var GroupMessageModel = require('../models/GroupMessageModel');
 var ChannelMessageModel = require('../models/ChannelMessageModel');
 var ChannelModel = require('../models/channelSchema');
+var xss = require('node-xss').clean;
 
 var users = [],
     userSocketIds = [],   /* array for storing users socketIDS */
@@ -181,7 +182,7 @@ var self = module.exports = {
   groupMessageHandler : function(socket, data){
     var newGroupMessage = GroupMessageModel({
       username : socket.username,
-      messageText : data.messageText,
+      messageText : xss(data.messageText),
     });
     newGroupMessage.save(function(err, data){
       console.log(data);

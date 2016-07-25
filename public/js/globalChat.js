@@ -66,6 +66,8 @@
       var item = "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
       chatDisplay.append(item);
     });
-    var logLastDate = messages[messages.length - 1].date;
-    chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
+    if(messages.length > 0){
+      var logLastDate = messages[messages.length - 1].date;
+      chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
+    }
   });

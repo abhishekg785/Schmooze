@@ -58,5 +58,5 @@ router.get('/:channel', checkLogin, function(req,res){
   });
 });
 
-router.get('/:channel')
+
 module.exports = router;
