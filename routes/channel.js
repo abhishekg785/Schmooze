@@ -50,6 +50,7 @@ router.get('/:channel', checkLogin, function(req,res){
       res.render('chat/channel404', {'channelName': channel});
     }
     else{
+      console.log('Getting channel' + channel);
       var channelDescription = data[0].channelDescription,
           channelOwner = data[0].channelOwner,
           channelName = data[0].channelName;
