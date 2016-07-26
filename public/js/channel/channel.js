@@ -9,8 +9,8 @@ var channelName = $('#channelName').val(),
 
 
 console.log('CHANNEL NAME IS' + channelName);
+console.log('IN THE SOCKET FUNCTIONS' + channelName);
 var ChannelFunctions = {
-  console.log('IN THE SOCKET FUNCTIONS' + channelName);
   socketConnect : function(channelName){
     return io('139.59.7.137:3000', {
       query : 'channelName=' + channelName
