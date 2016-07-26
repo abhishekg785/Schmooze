@@ -37,6 +37,8 @@ module.exports = function(app, io, express){
   /* other redis stuff */
   var sessionService = require('./shared/session-service');
   var socketFunctions = require('./shared/socketFunctions');
+  var HTMLCutter = require('./shared/HTMLCutter');
+
   sessionService.initializeRedis(redisClient, redisStore);
 
   var routes = require('./routes/index');
@@ -167,7 +169,7 @@ module.exports = function(app, io, express){
         io.emit('User disconnected');
       }
       else{
-        var messageText = data.messageText;
+        var messageText = HTMLCutter(data.messageText);
         io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
         socketFunctions.channelMessageHandler(socket, data);
       }
@@ -179,7 +181,7 @@ module.exports = function(app, io, express){
         io.emit('User disconnected');
       }
       else{
-        messageText = data.messageText;
+        var messageText = HTMLCutter(data.messageText);
         io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
         socketFunctions.groupMessageHandler(socket, data);
       }
