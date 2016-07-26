@@ -6,12 +6,13 @@ var channelName = $('#channelName').val(),
     usersDisplay = $('#usersDisplay'),
     channelList = $('#channelList'),
     channelCount = $('#channelCount');
-    // loggedUser = $('#loggedUser').val();
+
 
 console.log('CHANNEL NAME IS' + channelName);
 var ChannelFunctions = {
+  console.log('IN THE SOCKET FUNCTIONS' + channelName);
   socketConnect : function(channelName){
-    return io('localhost:3000', {
+    return io('139.59.7.137:3000', {
       query : 'channelName=' + channelName
     });
   },
