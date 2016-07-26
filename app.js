@@ -85,6 +85,7 @@ module.exports = function(app, io, express){
     var parseCookie = cookieParser(config.sessionSecret),
         handshake = socket.request,
         channelName = socket.handshake['query']['channelName'];
+        console.log('CHANNEL NAME' + channelName);
 
     parseCookie(handshake, null, function (err, data) {
       sessionService.get(handshake, function (err, session) {

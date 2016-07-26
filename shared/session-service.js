@@ -10,12 +10,13 @@ var self = module.exports = {
     },
 
     getSessionId: function (handshake) {
-      console.log('getting sessionId');
         return handshake.signedCookies[config.sessionCookieKey];
     },
 
     get: function (handshake, callback) {
+      console.log('IN THE GET FUNCTION');
         var sessionId = self.getSessionId(handshake);
+        console.log(sessionId);
         self.getSessionBySessionID(sessionId, function (err, session) {
             if (err) callback(err);
             if (callback != undefined)
