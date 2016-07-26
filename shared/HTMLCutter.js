@@ -32,11 +32,11 @@ var HTMLCutterFunctions = {
 
   symbolCutter : function(htmlString){
     console.log(htmlString);
-    if(htmlString.indexOf('(&)') != -1){
+    if(htmlString.indexOf('&') == -1){
       return htmlString;
     }
     else{
-      htmlString = htmlString.replace('&', '(&)');
+      htmlString = htmlString.replace('&', "'and'");
       return HTMLCutterFunctions.symbolCutter(htmlString);
     }
   }
