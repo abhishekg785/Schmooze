@@ -182,7 +182,7 @@ var self = module.exports = {
   groupMessageHandler : function(socket, data){
     var newGroupMessage = GroupMessageModel({
       username : socket.username,
-      messageText : xss(data.messageText),
+      messageText : data.messageText,
     });
     newGroupMessage.save(function(err, data){
       console.log(data);

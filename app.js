@@ -5,9 +5,7 @@
 * socket.io main flow code here
 */
 
-var express = require('express');
-
-module.exports = function(app,io){
+module.exports = function(app, io, express){
   var path = require('path');
   var favicon = require('serve-favicon');
   var logger = require('morgan');
