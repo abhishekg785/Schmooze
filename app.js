@@ -42,6 +42,7 @@ module.exports = function(app, io, express){
   var routes = require('./routes/index');
   var chat = require('./routes/chat');
   var channel = require('./routes/channel');
+  var logoutEvent = require('./routes/logoutEvent')(io);
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -68,6 +69,7 @@ module.exports = function(app, io, express){
   app.use('/', routes);
   app.use('/chat',chat);
   app.use('/channel',channel);
+  app.use('/logoutEvent', logoutEvent.index);
 
 
   // catch 404 and forward to error handler
@@ -160,15 +162,27 @@ module.exports = function(app, io, express){
     });
 
     socket.on('new channel message', function(data){
-      var messageText = data.messageText;
-      io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
-      socketFunctions.channelMessageHandler(socket, data);
+      var loggedUsers = socketFunctions.getUsersArray();
+      if(loggedUsers.indexOf(socket.username) == -1){
+        io.emit('User disconnected');
+      }
+      else{
+        var messageText = data.messageText;
+        io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
+        socketFunctions.channelMessageHandler(socket, data);
+      }
     });
 
     socket.on('new group message', function(data){
-      messageText = data.messageText;
-      io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
-      socketFunctions.groupMessageHandler(socket, data);
+      var loggedUsers = socketFunctions.getUsersArray();
+      if(loggedUsers.indexOf(socket.username) == -1){
+        io.emit('User disconnected');
+      }
+      else{
+        messageText = data.messageText;
+        io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
+        socketFunctions.groupMessageHandler(socket, data);
+      }
     });
   });
 

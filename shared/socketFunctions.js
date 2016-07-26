@@ -59,8 +59,10 @@ var self = module.exports = {
         console.log('MORE THAN ONE TAB OPEN');
       }
     }
-    userSocketIdsArr.splice(socketIDIndex,1);
-    self.printAllArrays();
+    if(userSocketIdsArr != undefined){
+      userSocketIdsArr.splice(socketIDIndex,1);
+      self.printAllArrays();
+    }
   },
 
   getChannelIndex : function(channelName){
@@ -123,7 +125,7 @@ var self = module.exports = {
         console.log('RESULT OF K IS' + result);
         if(result == 0){  /* no socket connection exists b/w user and server */
           channelUsers[channelIndex].splice(userIndex, 1);
-          // socket.leave(channelName);
+          socket.leave(channelName);
         }
       }
     }
@@ -247,8 +249,18 @@ var self = module.exports = {
     return users;
   },
 
-  getUserSocketIdArr : function(){
-    return userSocketIds;
+  getUserSocketIdArr : function(username){
+    console.log('GETTING SOCKETID ARRAY FOR LOGGED USER');
+    var userIndex = self.getUserIndex(username);
+        loggedUserSocketIdsArr = userSocketIds[userIndex];
+    console.log(userIndex);
+    console.log(loggedUserSocketIdsArr);
+    if(loggedUserSocketIdsArr != undefined){
+      return userSocketIds[userIndex];
+    }
+    else{
+      return false;
+    }
   },
 
   getChannels : function(callback){
@@ -268,6 +280,23 @@ var self = module.exports = {
 
   getChannelUserSocketIdArr : function(){
     return channelUserSocketIDs;
+  },
+
+  /* once the user logouts the user must be redirected to logout */
+  onLogoutEvent : function(username, io){
+    var loggedUserSocketIds = self.getUserSocketIdArr(username);
+    if(loggedUserSocketIds){
+      if(loggedUserSocketIds.length > 0){
+        console.log(loggedUserSocketIds);
+        loggedUserSocketIds.forEach(function(socketid){
+          io.sockets.connected[socketid].emit('terminate', 'gonna terminate all');
+        });
+      }
+    }
+    var loggedUsers = self.getUsersArray();
+    var userIndex = self.getUserIndex(username);
+    loggedUserSocketIds.length = 0;
+    loggedUsers.splice(userIndex, 1);
   },
 
   printAllArrays : function(){

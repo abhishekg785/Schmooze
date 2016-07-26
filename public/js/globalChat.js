@@ -25,7 +25,6 @@
     usersDisplay.empty();
     users = data.users;
     for(var i = 0 ; i < users.length; i++){
-      console.log(users[i]);
       var list = "<span>" + users[i] + "</span>";
       usersDisplay.append(list);
     }
