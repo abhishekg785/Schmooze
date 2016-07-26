@@ -8,7 +8,7 @@ var channelName = $('#channelName').val(),
     channelCount = $('#channelCount');
     // loggedUser = $('#loggedUser').val();
 
-
+console.log('CHANNEL NAME IS' + channelName);
 var ChannelFunctions = {
   socketConnect : function(channelName){
     return io('localhost:3000', {
