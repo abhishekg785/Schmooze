@@ -22,7 +22,11 @@ var ChannelFunctions = {
       alert('Message Field is required!');
     }
     else{
-      socket.emit('new channel message', {'messageText' : messageText});
+      socket.emit('new channel message', {'messageText' : messageText}, function(data){
+        if(data && data.length > 0){
+          alert(data);
+        }
+      });
       $('#messageText').val('');
     }
   }
@@ -93,4 +97,21 @@ socket.on('set channels', function(data){
       channelList.append(item);
     }
   });
+});
+
+socket.on('join channel command', function(data){
+  if(data.channelName){
+    window.location = '/channel/' + data.channelName;
+  }
+  else{
+    alert('No such channel Exists !');
+  }
+});
+
+socket.on('new private message', function(data){
+  console.log(data);
+});
+
+socket.on('terminate', function(data){
+  location.reload();
 });

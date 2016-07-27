@@ -45,6 +45,7 @@ module.exports = function(app, io, express){
   var chat = require('./routes/chat');
   var channel = require('./routes/channel');
   var logoutEvent = require('./routes/logoutEvent')(io);
+  var checkForCommand = require('./shared/checkForCommand');
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -163,27 +164,45 @@ module.exports = function(app, io, express){
       socketFunctions.setChannelsInDOM(io, socket);
     });
 
-    socket.on('new channel message', function(data){
+    socket.on('new channel message', function(data, callback){
       var loggedUsers = socketFunctions.getUsersArray();
       if(loggedUsers.indexOf(socket.username) == -1){
         io.emit('User disconnected');
       }
       else{
         var messageText = HTMLCutter(data.messageText);
-        io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
-        socketFunctions.channelMessageHandler(socket, data);
+        var result = checkForCommand.checkIfCommandORNot(messageText, socket, io);
+        if(result == false){
+          io.sockets.in(socket.channelName).emit('new channel message', {'sender' : socket.username, 'messageText' : messageText});
+          socketFunctions.channelMessageHandler(socket, data);
+        }
+        else{
+          console.log(result);
+          callback(result);
+        }
       }
     });
 
-    socket.on('new group message', function(data){
+    socket.on('new group message', function(data, callback){
       var loggedUsers = socketFunctions.getUsersArray();
       if(loggedUsers.indexOf(socket.username) == -1){
         io.emit('User disconnected');
       }
       else{
-        var messageText = HTMLCutter(data.messageText);
-        io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
-        socketFunctions.groupMessageHandler(socket, data);
+        console.log('NEW GROUP MESSAGE');
+        var messageText = data.messageText.trim();
+        messageText = HTMLCutter(messageText);
+        /* check for the command and executes the corresponding function */
+        /* check for swish or join */
+        var result = checkForCommand.checkIfCommandORNot(messageText, socket, io);
+        if(result === false){
+          io.emit('new group message', {'sender' : socket.username, 'messageText' : messageText});
+          socketFunctions.groupMessageHandler(socket, data);
+        }
+        else{
+          console.log(result);
+          callback(result);
+        }
       }
     });
   });

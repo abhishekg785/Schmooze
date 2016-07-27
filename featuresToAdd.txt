@@ -1,0 +1,1 @@
+give privileges to admin of the user of creator of the user

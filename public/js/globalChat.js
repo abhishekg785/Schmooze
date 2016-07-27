@@ -15,7 +15,11 @@
         alert('Message field is required');
       }
       else{
-        socket.emit('new group message', {'messageText':messageText});
+        socket.emit('new group message', {'messageText':messageText}, function(data){
+          if(data){
+            alert(data);
+          }
+        });
         $('#messageText').val('');
       }
     }
@@ -69,4 +73,21 @@
       var logLastDate = messages[messages.length - 1].date;
       chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
     }
+  });
+
+  socket.on('terminate', function(data){
+    location.reload();
+  });
+
+  socket.on('join channel command', function(data){
+    if(data.channelName){
+      window.location = '/channel/' + data.channelName;
+    }
+    else{
+      alert('No such channel Exists');
+    }
+  });
+
+  socket.on('new private message', function(data){
+    console.log(data);
   });

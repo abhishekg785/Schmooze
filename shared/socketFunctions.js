@@ -302,6 +302,19 @@ var self = module.exports = {
     loggedUsers.splice(userIndex, 1);
   },
 
+  channelExistsOrNot : function(channelName, callback){
+    ChannelModel.find({'channelName' : channelName}).exec(function(err, data){
+      if(!err){
+        callback(data);
+      }
+      else{
+        console.log('ERROR IN FETCHING CHANNEL');
+        console.log(err);
+        callback(false);
+      }
+    });
+  },
+
   printAllArrays : function(){
     console.log('ACTUAL VALUES OF ARRAY');
     console.log(users);
