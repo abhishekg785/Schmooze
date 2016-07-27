@@ -42,7 +42,7 @@
 						<section>
 							<div class="content">
 								<div class="inner">
-									<h2>We have a large team ! Our team size is '1' :p</h2>
+									<h2>We are a large team ! Our team size is '1' :p</h2>
 									<p>
 										Currently i am the only person on this ship!<br/>
 										I am a retarded engineer Undergrad of National Institute of Technology, Kurukshetra.<br/>
@@ -105,7 +105,7 @@
 					</section>
 
 					<section id="three" class="wrapper style1 fade-up">
-						<div class="inner">
+						<div class="inner" id = 'contactFormDiv'>
 							<h2>Get in touch</h2>
 							<p>Hi Friends! I am <a href = 'https://in.linkedin.com/in/abhishek-goswami-591541b1
 '>Abhishek Goswami</a>, the creator of this project :).<br/>I have open sourced the project.The project is available on Github <a href = 'https://github.com/abhishekg785/Schmooze'>Link</a>.Feel free to contribute to the project on Github.<br/>
@@ -113,28 +113,28 @@
 							</p>
 							<div class="split style1">
 								<section>
-									<form method="post" action="#">
+									<form method="post" id = 'messageForm'>
 										<div class="field half first">
 											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
+											<input type="text" name="name" id="name" required/>
 										</div>
 										<div class="field half">
 											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
+											<input type="email" name="email" id="email" required/>
 										</div>
 										<div class="field">
 											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="5"></textarea>
+											<textarea name="message" id="message" rows="5" maxlength="200" required></textarea>
 										</div>
 										<ul class="actions">
-											<li><a href="" class="button submit">Send Message</a></li>
+											<li><input type = 'submit' id ='submitContact' onsubmit="startPageFunctions.sendUserDetails()" value = 'Send Message'/></li>
 										</ul>
 									</form>
 								</section>
 								<section>
 									<ul class="contact">
 										<li>
-											<h3>H-10, Room-No: 337</h3>
+											<h3>H-10, Room-No : 337</h3>
 											<span>NIT, Kurukshetra<br />
 											Thanesar, Haryana, 136119<br />
 											India</span>
@@ -143,6 +143,10 @@
 											<h3>Email</h3>
 											<p>abhishekg785@gmail.com</p>
 										</li>
+										<li>
+											<h3>Github</h3>
+											<p>Username : abhishekg785</p>
+										</li>
 									</ul>
 								</section>
 							</div>
@@ -150,5 +154,6 @@
 					</section>
 				</div>
 		<% include mainFooter.html %>
+		<script src = 'js/startPage.js'></script>
   </body>
 </html>

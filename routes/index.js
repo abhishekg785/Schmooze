@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var socketFunctions = require('../shared/socketFunctions');
+var ContactMessageModel = require('../models/ContactMessageModel');
 
 /* middleware for checking user is logged in or not */
 
@@ -36,6 +37,28 @@ router.post('/login',function(req,res){
 
 router.get('/logout/',function(req,res){
   res.redirect('/logoutEvent');
+});
+
+router.post('/contact/', function(req, res){
+  var userData = req.body,
+      username = userData.user,
+      message = userData.message,
+      email = userData.email;
+  var newContact = new ContactMessageModel({
+    username : username,
+    message : message,
+    email : email
+  });
+  newContact.save(function(err, data){
+    if(!err){
+      console.log(data);
+      res.end('dcldckldnckldnc');
+    }
+    else{
+      console.log(err);
+      res.end('Error Occurred! Try Again');
+    }
+  });
 });
 
 module.exports = router;

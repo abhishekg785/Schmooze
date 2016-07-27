@@ -18,5 +18,5 @@ var channelMessageSchema = new mongoose.Schema({
   }
 });
 
-var ChannelMessageModel = mongoose.model('ChannelMessageModel', channelMessageSchema)
+var ChannelMessageModel = mongoose.model('ChannelMessageModel', channelMessageSchema);
 module.exports = ChannelMessageModel;
