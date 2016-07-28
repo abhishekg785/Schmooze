@@ -175,10 +175,93 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		height: 80%;
 	}
 
-	#channelDisplay a{
-
+  #messageViewCancel{
+		height: 30px;
+		width: 80px;
+		position: absolute;
+		top:0px;
+		right: 0px;
+		cursor: pointer;
 	}
 
+	#messageView{
+		height: 100%;
+		width: 100%;
+		background-color: #1abc9c;
+		position: absolute;
+		z-index: 9;
+		color: #2c3e50;
+		opacity: 0.99;
+		overflow-y: hidden;
+		display: none;
+	}
+
+  #messageView h2{
+		color:  #2c3e50;
+	}
+
+	#messageView h3{
+		color:  #2c3e50;
+	}
+
+	#messageViewHeading{
+		width: 100%;
+		text-align: center;
+		height: 8%;
+		border-bottom: 3px solid  #2c3e50;
+	}
+
+	#messageViewContent{
+		width: 100%;
+		height: 88%;
+		display: none;
+		top:12%;
+	}
+
+  #messageViewMessages{
+		width: 100%;
+		/*border:2px solid black;*/
+		overflow-y: scroll;
+		height: 100%;
+		list-style: none;
+	}
+
+	#messageViewMessages ul{
+		list-style: none;
+		padding: 0px;
+	}
+
+	#messageViewMessages li{
+		width: 100%;
+		padding: 5px;
+	}
+
+  #sendPrivateMessageView{
+		width: 100%;
+		display: none;
+	}
+
+	#sendPrivateMessageView > input{
+		width: 80%;
+		border: 2px solid #2c3e50;
+		color: #2c3e50;
+		margin: 10px auto;
+		border-radius: none;
+	}
+
+	#sendPrivateMessageButton{
+		border:2px solid #2c3e50;
+		width: 100px;
+		margin: 0px auto;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	#privateMessageReceiverInfo{
+		margin-top: 5px;
+		width: 100%;
+		text-align: center;
+	}
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block;
 	}

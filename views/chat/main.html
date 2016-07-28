@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="/css/main.css" />
 	</head>
   <body>
+		<% include messageView.html %>
     <section id = 'chatArea'>
 			<div id = 'chatHeading'>Global Chat Platform : Everything you message here will be received by each online users, So use it for broadcasting purposes :)</div>
 			<div id = 'chatDisplay'>
@@ -33,6 +34,7 @@
 					<% }); %>
 				</div>
 				<span><a href = '/logout'>Logout</a></span>
+				<span onclick="privateMessageHandlerFunctions.showMessageViewToDisplayMessages()">Messages</span>
 			</div>
     </section>
     <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
@@ -40,6 +42,10 @@
   </body>
   <% include footer.html %>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script>
+	    var socket = io.connect();
+	</script>
+	<script src = '/js/privateMessageHandler.js'></script>
 	<script src = '/js/globalChat.js'></script>
 	<script>
 	  var channelListHeading = $('#channelListHeading'),

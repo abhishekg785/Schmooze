@@ -205,6 +205,19 @@ module.exports = function(app, io, express){
         }
       }
     });
+
+    socket.on('new private message', function(data){
+      var receiver = data.receiver,
+          messageText = data.messageText,
+          sender = socket.username;
+      var receiverSocketIDArr = socketFunctions.getUserSocketIdArr(receiver);
+      console.log(receiverSocketIDArr);
+      if(receiverSocketIDArr != undefined && receiverSocketIDArr.length > 0){
+        receiverSocketIDArr.forEach(function(socketid){
+          io.sockets.connected[socketid].emit('new private message', {'messageText' : messageText, 'sender' : sender});
+        });
+      }
+    });
   });
 
   // development error handler

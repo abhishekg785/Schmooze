@@ -25,14 +25,12 @@
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<div class="inner">
               <span style="color:orange">
-                <% if(!message){ %>
-                  Nickname is taken at the moment!  Try with another nickname
-                <% } %>
+								<%= message %>
               </span>
 							<h1>Login</h1>
               <p>No password required, Just have a nickname !</p>
               <form method="post">
-                <input type="text" name = 'username' required placeholder="Have a Nickname :) "/><br/>
+                <input type="text" name = 'username' required placeholder="Have a Nickname :) " required maxlength="15"/><br/>
                 <input type="submit" name = 'sendData'/>
               </form>
 						</div>

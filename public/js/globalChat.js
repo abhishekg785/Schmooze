@@ -1,5 +1,4 @@
-  var socket = io.connect(),
-      onlineUserArea = $('#onlineUserArea'),
+  var onlineUserArea = $('#onlineUserArea'),
       channelArea = $('#channelArea'),
       chatArea = $('#chatArea'),
       sendMessage = $('#sendMessage'),
@@ -29,7 +28,7 @@
     usersDisplay.empty();
     users = data.users;
     for(var i = 0 ; i < users.length; i++){
-      var list = "<span>" + users[i] + "</span>";
+      var list = "<span onClick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + users[i] + '"' + ")'>" + users[i] + "</span>";
       usersDisplay.append(list);
     }
   });
@@ -89,5 +88,8 @@
   });
 
   socket.on('new private message', function(data){
-    console.log(data);
+    /* show user noti for new messages */
+
+    privateMessageHandlerFunctions.pushPrivateMessage(data);
+    privateMessageHandlerFunctions.realTimeMessageView(data);
   });

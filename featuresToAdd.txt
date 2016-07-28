@@ -1,1 +1,2 @@
 give privileges to admin of the user of creator of the user
+Crate a single function to handle the fun of sending messages to all the socketids of a user!

@@ -38,7 +38,7 @@
 
       messageSentSuccess : function(){
         contactFormDiv.empty();
-        contactFormDiv.append('<h1>Your message has been sent Successfully</h1>');
+        contactFormDiv.append('<h1>Your message has been sent Successfully !</h1>');
       },
 
       messageSentError: function(){

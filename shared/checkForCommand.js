@@ -50,7 +50,8 @@ module.exports = commandFunctions = {
         }
         else{
           var receiver = commandInfo.substr(0, firstSpaceIndex),
-              messageText = commandInfo.substr(firstSpaceIndex).trim();
+              messageText = commandInfo.substr(firstSpaceIndex).trim(),
+              sender = socket.username;
           if(messageText.length <= 0){
             return statusMessage['message_len_err'];
           }
@@ -64,7 +65,7 @@ module.exports = commandFunctions = {
             if(receiverSocketIDArr != undefined){
               console.log('EMITTING MESSAGES');
               receiverSocketIDArr.forEach(function(socketid){
-                io.sockets.connected[socketid].emit('new private message', {'messageText' : messageText});
+                io.sockets.connected[socketid].emit('new private message', {'messageText' : messageText, 'sender' : sender});
               });
             }
             return statusMessage['message_success'];

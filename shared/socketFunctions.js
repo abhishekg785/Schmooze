@@ -169,7 +169,7 @@ var self = module.exports = {
 
   /*
   *  message handler for channels
-  *  fields to store are : username, messageText, channelName, date(deafult)
+  *  handles the storing messages to the db
   */
   channelMessageHandler : function(socket, data){
     var messageText = HTMLCutter(data.messageText);
@@ -192,6 +192,10 @@ var self = module.exports = {
     newGroupMessage.save(function(err, data){
       console.log(data);
     });
+  },
+
+  privateMessageHandler : function(username){
+
   },
 
   getChannelMessages: function(channelName, callback){

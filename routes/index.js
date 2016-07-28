@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var socketFunctions = require('../shared/socketFunctions');
 var ContactMessageModel = require('../models/ContactMessageModel');
+var HTMLCutter = require('../shared/HTMLCutter');
 
 /* middleware for checking user is logged in or not */
 
@@ -17,21 +18,24 @@ router.get('/', check_login, function(req, res){
 });
 
 router.get('/login', check_login, function(req, res, next) {
-  res.render('index', {'message':'loginPage'});
+  res.render('index', {'message':''});
 });
 
-router.post('/login',function(req,res){
-  var username = req.body.username;
-  var onlineUsers = socketFunctions.getUsersArray();
-  var userIndex = onlineUsers.indexOf(username);
-  if(userIndex == -1){
-    req.session.username = username;
-    console.log('session set');
-    console.log(req.session);
-    res.redirect('/chat');
+router.post('/login', check_login, function(req,res){
+  var username = HTMLCutter(req.body.username);
+  if(username.length > 3){
+    var onlineUsers = socketFunctions.getUsersArray();
+    var userIndex = onlineUsers.indexOf(username);
+    if(userIndex == -1){
+      req.session.username = username;
+      res.redirect('/chat');
+    }
+    else{
+      res.render('index', {'message':'Nickname is taken at the moment!  Try with another nickname'});
+    }
   }
   else{
-    res.render('index', {'message':false});
+    res.render('index', {'message':'Nickname Field must have atleast 4 chars'});
   }
 });
 
@@ -41,8 +45,8 @@ router.get('/logout/',function(req,res){
 
 router.post('/contact/', function(req, res){
   var userData = req.body,
-      username = userData.user,
-      message = userData.message,
+      username = HTMLCutter(userData.user),
+      message = HTMLCutter(userData.message),
       email = userData.email;
   var newContact = new ContactMessageModel({
     username : username,
