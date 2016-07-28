@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Schmooze:Login</title>
+		<title>Schmooze:Channels</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />
@@ -27,17 +27,19 @@
       <section id="two" class="wrapper style3 fade-up">
         <div class="inner">
         	<h2>Channels</h2>
-        			<p>Click on the link of the available channels to enter into the channel</p>
+        			<p>Click on the link of the available channels to enter.</p>
         			<div class="features">
+								<section>
+									<h3 style="color:#34495e"><a href = '/chat'>GLOBAL CHAT</a></h3>
+									<p style="color:#34495e">You have all the online users available here, so everything you message here will reach to the each online user on the platform ! Can be used for Broadcasting, Notice etc.</p>
+								</section>
                 <% if(channels.length > 0){ %>
                   <% channels.forEach(function(channel){ %>
                     <section>
           					  <h3><a href = '/channel/<%= channel.channelName %>'><%= channel.channelName %></a></h3>
           					  <p><%= channel.channelDescription %></p>
           				  </section>
-                  <% }) %>
-                  <% } else{ %>
-                    <h1>No Channels Yet :)</h1>
+                  <% }); %>
                   <% } %>
         			</div>
         </div>

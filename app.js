@@ -109,16 +109,21 @@ module.exports = function(app, io, express){
         */
 
         sessionService.getUserName(handshake,function(err, username){
-          usernameIndex = socketFunctions.getUserIndex(username);
-          if(usernameIndex == -1){
-            socketFunctions.addNewUser(username);
-            //add the array for storing socketIDS in the userSocketIds array
-            socketFunctions.initializeUserSocketIds();
-            }
-          socket.username = username;
-          socket.id = socket.id;
-          socketFunctions.addNewUserSocketObject(username, socket);
-          next();
+          if(username && username != undefined){
+            usernameIndex = socketFunctions.getUserIndex(username);
+            if(usernameIndex == -1){
+              socketFunctions.addNewUser(username);
+              //add the array for storing socketIDS in the userSocketIds array
+              socketFunctions.initializeUserSocketIds();
+              }
+            socket.username = username;
+            socket.id = socket.id;
+            socketFunctions.addNewUserSocketObject(username, socket);
+            next();
+          }
+          // else{
+          //   socket.emit('disconnect', 'You have been Disconnected');
+          // }
         });
       });
     });
@@ -126,8 +131,7 @@ module.exports = function(app, io, express){
 
   //we listen for the sockets connecting to the server here
   io.sockets.on('connection',function(socket){
-    console.log(socket.username + ' ' + 'is connected');
-
+    var logString = socket.username + ' Connected';
     /*
     *  manage channel part here
     *  push channel name into the channels array and make the push [] into the channelUsers
@@ -146,9 +150,10 @@ module.exports = function(app, io, express){
         socketFunctions.initializeChannelUsersArray();
       }
       socketFunctions.addUserToChannel(socket);
-      socketFunctions.setChannelMessageInDOM(io, socket.channelName);
+      socketFunctions.setChannelMessageInDOM(io, socket.id, socket.channelName);
     }
 
+    socketFunctions.createLog(io, logString, socket.channelName);
     socketFunctions.printAllArrays();
     socketFunctions.updateUsersInDOM(io);
     socketFunctions.setGroupMessagesInDOM(socket);
@@ -156,6 +161,8 @@ module.exports = function(app, io, express){
     socketFunctions.setChannelsInDOM(io, socket);
 
     socket.on('disconnect', function(){
+      var logString = socket.username + ' Disconnected';
+      socketFunctions.createLog(io, logString, socket.channelName);
       console.log(socket.username + 'disconnected');
       socketFunctions.userDisConnectFromChannel(socket);
       socketFunctions.userDisconnectUpdate(socket.username, socket);
@@ -170,6 +177,7 @@ module.exports = function(app, io, express){
         io.emit('User disconnected');
       }
       else{
+        console.log(loggedUsers);
         var messageText = HTMLCutter(data.messageText);
         var result = checkForCommand.checkIfCommandORNot(messageText, socket, io);
         if(result == false){

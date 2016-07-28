@@ -32,13 +32,25 @@ router.post('/', checkLogin, function(req, res){
   var channelInfo = req.body,
       channelName = channelInfo.channelName,
       channelDesc = channelInfo.channelDesc;
-  var newChannel = ChannelModel({
-    'channelName' : channelName,
-    'channelDescription' : channelDesc,
-    'channelOwner' : req.session.username
+  ChannelModel.find({'channelName' : channelName}).exec(function(err, data){
+    if(!err){
+      if(!data.length){
+        var newChannel = ChannelModel({
+          'channelName' : channelName,
+          'channelDescription' : channelDesc,
+          'channelOwner' : req.session.username
+        });
+        newChannel.save();
+        res.redirect('/channel');
+      }
+      else{
+        res.render('chat/warning_page', {'message' : 'Channel Exists! Try again with a different Name'});
+      }
+    }
+    else{
+      res.end('Error occured! Try Again!');
+    }
   });
-  newChannel.save();
-  res.redirect('/channel');
 });
 
 /* check if the channel exists or not */

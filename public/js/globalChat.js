@@ -94,3 +94,7 @@
     privateMessageHandlerFunctions.pushPrivateMessage(data);
     privateMessageHandlerFunctions.realTimeMessageView(data);
   });
+
+  socket.on('new log message', function(data){
+    chatDisplay.append("<span style = 'color:orange'><li>------------------------" + data.logMessage +"-------------------</li></span>");
+  });

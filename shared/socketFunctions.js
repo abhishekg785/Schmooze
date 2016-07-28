@@ -239,9 +239,9 @@ var self = module.exports = {
     });
   },
 
-  setChannelMessageInDOM : function(io, channelName){
+  setChannelMessageInDOM : function(io, socketid, channelName){
     self.getChannelMessages(channelName, function(data){
-      io.sockets.in(channelName).emit('set channel messages', {'messages' : data});
+      io.sockets.connected[socketid].emit('set channel messages', {'messages' : data});
     });
   },
 
@@ -304,6 +304,7 @@ var self = module.exports = {
     var userIndex = self.getUserIndex(username);
     loggedUserSocketIds.length = 0;
     loggedUsers.splice(userIndex, 1);
+    console.log(self.getUsersArray());
   },
 
   channelExistsOrNot : function(channelName, callback){
@@ -317,6 +318,29 @@ var self = module.exports = {
         callback(false);
       }
     });
+  },
+
+  /*
+  *  handles the logs
+  *  logs for : user connects, user disconnects, last session
+  *  check for the channel and if the channel exists then log into that channel only
+  */
+  createLog : function(io, logString, channelName){
+    if(channelName != undefined){
+      var newChannelMessage = new ChannelMessageModel({
+        username : 'bot@ARON',
+        messageText : HTMLCutter(logString),
+        channelName : channelName
+      });
+      newChannelMessage.save(function(err, data){
+        if(!err){
+          io.sockets.in(channelName).emit('new log message', {'logMessage' : logString});
+        }
+        else{
+          res.end('Error Occurred! Try Again!');
+        }
+      });
+    }
   },
 
   printAllArrays : function(){

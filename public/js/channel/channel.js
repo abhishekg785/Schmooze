@@ -4,7 +4,8 @@ var channelName = $('#channelName').val(),
     chatDisplay = $('#chatDisplay'),
     usersDisplay = $('#usersDisplay'),
     channelList = $('#channelList'),
-    channelCount = $('#channelCount');
+    channelCount = $('#channelCount'),
+    botName = 'bot@ARON';
 
 console.log('CHANNEL NAME IS' + channelName);
 console.log('IN THE SOCKET FUNCTIONS' + channelName);
@@ -52,7 +53,7 @@ socket.on('channel user update', function(data){
   });
 });
 
-socket.on('set channel messages' , function(data){
+socket.on('set channel messages', function(data){
   chatDisplay.empty();
   var messages = data.messages;
   messages.forEach(function(message, i){
@@ -67,7 +68,7 @@ socket.on('set channel messages' , function(data){
         chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
       }
     }
-    var item = "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+    var item = username != botName ? "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>" : "<li style = 'color:orange;font-size:10px;'><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
     chatDisplay.append(item);
   });
   if(messages.length > 0){
@@ -107,4 +108,8 @@ socket.on('new private message', function(data){
 
 socket.on('terminate', function(data){
   location.reload();
+});
+
+socket.on('new log message', function(data){
+  chatDisplay.append("<span style = 'color:orange; text-align:center'><li>------------------------" + data.logMessage +"-------------------</li></span>");
 });
