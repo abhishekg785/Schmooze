@@ -1,4 +1,3 @@
-// var channelName = "<%= channelName %>",
 var channelName = $('#channelName').val(),
     sendMessage = $('#sendMessage'),
     messageText = $('#messageText'),
@@ -10,12 +9,6 @@ var channelName = $('#channelName').val(),
 console.log('CHANNEL NAME IS' + channelName);
 console.log('IN THE SOCKET FUNCTIONS' + channelName);
 var ChannelFunctions = {
-  socketConnect : function(channelName){
-    return io('localhost:3000', {
-      query : 'channelName=' + channelName
-    });
-  },
-
   sendMessage : function(){
     var messageText = $('#messageText').val();
     if(messageText == ''){
@@ -31,8 +24,6 @@ var ChannelFunctions = {
     }
   }
 }
-
-var socket = ChannelFunctions.socketConnect(channelName);
 
 sendMessage.on('click', function(){
   ChannelFunctions.sendMessage();
@@ -56,7 +47,7 @@ socket.on('channel user update', function(data){
   usersDisplay.empty();
   var users = data.users;
   users.forEach(function(user){
-    var item = "<span>" + user + "</span>";
+    var item = "<span onclick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + user + '"' + ")'>" + user + "</span>";
     usersDisplay.append(item);
   });
 });
@@ -109,7 +100,9 @@ socket.on('join channel command', function(data){
 });
 
 socket.on('new private message', function(data){
-  console.log(data);
+  messageSpan.css('color', 'red');
+  privateMessageHandlerFunctions.pushPrivateMessage(data);
+  privateMessageHandlerFunctions.realTimeMessageView(data);
 });
 
 socket.on('terminate', function(data){

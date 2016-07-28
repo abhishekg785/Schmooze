@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="/css/main.css" />
 	</head>
   <body>
+		<% include messageView.html %>
     <section id = 'chatArea'>
 			<div id = 'chatHeading'>Welcome to the channel "<%= channelName %>" : <%= channelDescription %></div>
 			<div id = 'chatDisplay'>
@@ -31,7 +32,7 @@
 				<div id = 'channelList'>
 				</div>
 				<span><a href = '/logout'>Logout</a></span>
-				<span><a href = ''>My Messages</a></span>
+				<span id = 'messageSpan' onclick="privateMessageHandlerFunctions.showMessageViewToDisplayMessages()">Messages</span>
 			</div>
     </section>
     <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
@@ -40,6 +41,16 @@
   </body>
   <% include footer.html %>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script>
+	  var channelName = "<%= channelName %>";
+		function socketConnect(channelName){
+			return io('localhost:3000', {
+				query : 'channelName=' + channelName
+			});
+		};
+		var socket = socketConnect(channelName);
+	</script>
+	<script src = '/js/privateMessageHandler.js'></script>
   <script src = "/js/channel/channel.js"></script>
 	<script>
 	  var channelListHeading = $('#channelListHeading'),

@@ -8,7 +8,8 @@ var messageView = $('#messageView'),
     sendPrivateMessageButton = $('#sendPrivateMessageButton'),
     privateMessageText = $('#privateMessageText'),
     privateMessageArr = [],
-    receiver = "";
+    receiver = "",
+    messageSpan = $('#messageSpan');
 
 var privateMessageHandlerFunctions = {
   showMessageView : function(){
@@ -21,6 +22,7 @@ var privateMessageHandlerFunctions = {
   },
 
   showMessageViewToDisplayMessages : function(){
+    messageSpan.css('color', 'white');
     privateMessageHandlerFunctions.clearMessageViewElements();
     messageViewHeading.append('<h2>Received Messages</h2>');
     sendPrivateMessageView.hide();

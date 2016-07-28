@@ -5,7 +5,8 @@
       messageText = $('#messageText'),
       chatHeading = $('#chatHeading'),
       chatDisplay = $('#chatDisplay'),
-      usersDisplay = $('#usersDisplay');
+      usersDisplay = $('#usersDisplay'),
+      messageSpan = $('#messageSpan');
 
   var GlobalChatFunctions = {
     sendMessage : function(){
@@ -89,7 +90,7 @@
 
   socket.on('new private message', function(data){
     /* show user noti for new messages */
-
+    messageSpan.css('color', 'red');
     privateMessageHandlerFunctions.pushPrivateMessage(data);
     privateMessageHandlerFunctions.realTimeMessageView(data);
   });
