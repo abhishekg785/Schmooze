@@ -103,4 +103,5 @@
 
   socket.on('new log message', function(data){
     chatDisplay.append("<span style = 'color:orange'><li>------------------------" + data.logMessage +"-------------------</li></span>");
+    GlobalChatFunctions.scrollDivToHeight('chatDisplay');
   });
