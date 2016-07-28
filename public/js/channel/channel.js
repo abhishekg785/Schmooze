@@ -23,6 +23,10 @@ var ChannelFunctions = {
       });
       $('#messageText').val('');
     }
+  },
+
+  scrollDivToHeight : function(divName){
+    $("#" + divName).animate({ scrollTop: $('#' + divName)[0].scrollHeight }, 1000);
   }
 }
 
@@ -42,6 +46,7 @@ socket.on('new channel message', function(data){
       // item = sender + ':' + messageText + '<br/>';
       item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
   chatDisplay.append(item);
+  ChannelFunctions.scrollDivToHeight('chatDisplay');
 });
 
 socket.on('channel user update', function(data){
@@ -75,6 +80,7 @@ socket.on('set channel messages', function(data){
     var logLastDate = messages[messages.length - 1].date;
     chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
   }
+  ChannelFunctions.scrollDivToHeight('chatDisplay');
 });
 
 socket.on('set channels', function(data){

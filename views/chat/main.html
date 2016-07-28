@@ -49,11 +49,13 @@
 	<script src = '/js/globalChat.js'></script>
 	<script>
 	  var channelListHeading = $('#channelListHeading'),
-		    channelList = $('#channelList');
+		    channelList = $('#channelList'),
+				chatDisplay = $('#chatDisplay');
 	  channelListHeading.click(function(){
 			channelList.toggle(function(){
 				channelList.css('height', '40%');
 			});
 		});
+		console.log($('#chatDisplay').height());
 	</script>
 </html>

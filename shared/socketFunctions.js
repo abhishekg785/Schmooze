@@ -195,7 +195,7 @@ var self = module.exports = {
   },
 
   privateMessageHandler : function(username){
-
+    //pass
   },
 
   getChannelMessages: function(channelName, callback){
@@ -326,7 +326,7 @@ var self = module.exports = {
   *  check for the channel and if the channel exists then log into that channel only
   */
   createLog : function(io, logString, channelName){
-    if(channelName != undefined){
+    if(channelName != undefined && channelName){
       var newChannelMessage = new ChannelMessageModel({
         username : 'bot@ARON',
         messageText : HTMLCutter(logString),

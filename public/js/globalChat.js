@@ -22,6 +22,10 @@
         });
         $('#messageText').val('');
       }
+    },
+
+    scrollDivToHeight : function(divName){
+      $("#" + divName).animate({ scrollTop: $('#' + divName)[0].scrollHeight }, 1000);
     }
   }
 
@@ -49,6 +53,7 @@
         messageText = data.messageText;
         item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
     chatDisplay.append(item);
+    GlobalChatFunctions.scrollDivToHeight('chatDisplay');
   });
 
   socket.on('set group message', function(data){
@@ -73,6 +78,7 @@
       var logLastDate = messages[messages.length - 1].date;
       chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
     }
+    GlobalChatFunctions.scrollDivToHeight('chatDisplay');
   });
 
   socket.on('terminate', function(data){
