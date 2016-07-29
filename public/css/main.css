@@ -238,7 +238,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		width: 100%;
 		background-color: #1abc9c;
 		position: absolute;
-		z-index: 9;
+		z-index: 99;
 		color: #2c3e50;
 		opacity: 0.99;
 		overflow-y: hidden;
