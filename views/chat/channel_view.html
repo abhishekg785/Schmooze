@@ -28,11 +28,12 @@
 				<h2><%= username %></h2>
 			</div>
 			<div id = 'channelDisplay'>
-				<span id = 'channelListHeading'>Available Channels</span>
+				<span id = 'channelListHeading'>Channels</span>
 				<div id = 'channelList'>
 				</div>
-				<span><a href = '/logout'>Logout</a></span>
+				<span id = 'createChannelButton'>Create Channel</span>
 				<span id = 'messageSpan' onclick="privateMessageHandlerFunctions.showMessageViewToDisplayMessages()">Messages</span>
+				<span id = 'logoutButton'>Logout</span>
 			</div>
     </section>
     <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
@@ -52,13 +53,5 @@
 	</script>
 	<script src = '/js/privateMessageHandler.js'></script>
   <script src = "/js/channel/channel.js"></script>
-	<script>
-	  var channelListHeading = $('#channelListHeading'),
-		    channelList = $('#channelList');
-	  channelListHeading.click(function(){
-			channelList.toggle(function(){
-				channelList.css('height', '40%');
-			});
-		});
-	</script>
+	<script src = '/js/channel/channelList.js'></script>
 </html>

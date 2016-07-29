@@ -15,22 +15,26 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
  #messageText{
 		position: absolute;
 		bottom: 0px;
-		height: 8%;
+		height: 54px;
 		font-size: 1.5em;
 		width: 90%;
+		background-color: #2c3e50;
+		color: white;
+		border-radius: 0px;
 	}
 
   #sendMessage{
 		position: absolute;
 		bottom: 0px;
 		right: 0px;
-		height: 8%;
+		height: 54px;
 		width: 10%;
 		cursor: pointer;
 		text-align: center;
 		font-size: 1.5em;
-		padding-top: 5px;
-		border: 1px solid white;
+		border: 2px solid white;
+		background-color: #2c3e50;
+		color: #fff;
 	}
 
   .channelSideBar{
@@ -44,11 +48,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		left:15%;
 		list-style: none;
 		font-family: "Courier New", monospace;
+		background-color:#16a085;
+		color:#fff;
 	}
 
 
 	#chatHeading{
-		height:50px;
+		height:55px;
 		width: 100%;
 		position: absolute;
 		background-color: green;
@@ -56,15 +62,19 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		font-size: 15px;
 		padding: 2px;
 		overflow-y: scroll;
+		font-weight: bold;
+		letter-spacing: 0.1em;
+		background-color:#2c3e50;
 	}
 
 
 	#chatDisplay{
 		height:91%;
 		width: 100%;
-		top:50px;
+		top:56px;
 		position: absolute;
-		overflow-y: scroll;
+		overflow-y: auto;
+		font-size: 5px;
 	}
 
 	#chatDisplay ul {
@@ -77,7 +87,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	}
 
   .uname{
-		color: red;
+		color: #34495e;
 	}
 
   #onlineUserArea{
@@ -85,7 +95,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		width: 15%;
 		position: absolute;
 		right:0px;
-		overflow-y: scroll;
+		border-left: 3px solid #34495e;
+		overflow-x: none;
+		background-color:#1abc9c;
+		color:white;
 	}
 
   #onlineUserArea span{
@@ -97,35 +110,61 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		font-size: 15px;
 		padding: 5px;
 		cursor:pointer;
-		transition: all 0.5s ease;
 	}
 
 
   #onlineUserHead{
 		width: 100%;
 		font-weight: bolder;
-		position: fixed;
-		padding-left: 30px;
-		height: 5%;
+		position: absolute;
+		top:0px;
+		height: 2em;
 		color: white;
-		border-bottom: 2px solid white;
+		text-align: center;
+		border-bottom: 3px solid #34495e;
+		font-weight: bold;
+		padding-bottom: 5px;
+		letter-spacing: 0.1em;
 	}
+
 
   #usersDisplay{
 		height: 95%;
 		width: 100%;
 		position: absolute;
-		top:5%;
+		top:32px;
+		overflow-y: auto;
+		font-weight: bold;
+		letter-spacing: 0.1em;
+		font-size: 0.7em;
+		text-align: center;
+		transition: all 1s ease;
+		overflow-x: none;
+	}
+
+	#usersDisplay span{
+		width: 95%;
+		margin: 5px;
+		border-bottom: 1px solid #34495e;
+	}
+
+	#usersDisplay span:hover{
+		background-color: #16a085;
+		border-bottom:2px solid #34495e;
 	}
 
   #channelDisplay{
 		width: 100%;
 		position: absolute;
 		top:80px;
+		text-align: center;
+		font-size: 0.7em;
+    font-weight: bold;
+    letter-spacing: 0.2em;
 	}
 
 	#channelDisplay span{
-		width: 100%;
+		width: 95%;
 		display: inline-block;
 		text-align: center;
 		/*border: 1px solid white;*/
@@ -133,40 +172,50 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		margin-bottom:2.5px;
 		margin-top: 2.5px;
 		cursor: pointer;
-		transition: all 0.5s;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid #34495e;
+		margin: 5px;
 	}
 
-#channelListHeading{
-	border-bottom: 1px solid white;
-}
-
-	#onlineUserArea span:hover{
-		/*border-bottom: 1px solid white;*/
-		background-color: white;
+	#channelDisplay span:hover{
+		width: 95%;
+		margin: 5px;
+		border-bottom: 2px solid #34495e;
+		background-color: #16a085;
 	}
+
+  #channelListHeading{
+	  border-bottom: 1px solid white;
+  }
+
 
 	#channelArea{
 		height: 92%;
 		width: 15%;
-	  border-right: 2px solid white;
+	  border-right: 3px solid #34495e;
 		position: absolute;
 		left: 0px;
 		font: inherit;
 		text-decoration: none;
+		background-color:1abc9c;
+		color:white;
 	}
 
 	#channelList{
 		width: 100%;
-		overflow-y: scroll;
+		overflow-y: auto;
 		height: 0px;
-		max-height: 40%;
+		background-color: #34495e;
+		/*transition: height 0.5s ease;*/
 	}
+
 
   #channelHeading{
 		width: 100%;
 		text-align: center;
-		border-bottom: 2px solid white;
+		border-bottom: 3px solid #34495e;
+		font-weight: bold;
+		letter-spacing: 0.1em;
+		font-size: 12px;
 	}
 
 	.chill{
@@ -194,6 +243,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		opacity: 0.99;
 		overflow-y: hidden;
 		display: none;
+		transition: all 0.6 ease;
 	}
 
   #messageView h2{

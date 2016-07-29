@@ -68,6 +68,7 @@ var privateMessageHandlerFunctions = {
   },
 
   sendPrivateMessage : function(){
+    sendPrivateMessageButton.text('Sending ...');
     var messageText = $('#privateMessageText').val();
     if(messageText.length > 0){
       var emitObj = {
@@ -76,6 +77,8 @@ var privateMessageHandlerFunctions = {
       };
       socket.emit('new private message', emitObj);
       privateMessageText.val('');
+      sendPrivateMessageButton.text('Send');
+      privateMessageReceiverInfo.text('Message sent Successfully :)');
     }
     else{
       alert('Message Field is required !');

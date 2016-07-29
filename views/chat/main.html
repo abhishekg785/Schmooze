@@ -10,6 +10,31 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />
+		<style>
+		  @media (max-width : 1025px){
+				#channelArea{
+					display: none;
+				}
+
+				#onlineUserArea{
+					display: none;
+				}
+
+				#chatArea{
+					width : 100%;
+					left: 0px;
+				}
+
+				#chatHeading{
+					height: 40px;
+					font-size: 10px;
+				}
+
+				#chatDisplay li{
+					font-size: 10px;
+				}
+			}
+		</style>
 	</head>
   <body>
 		<% include messageView.html %>
@@ -20,7 +45,8 @@
     </section>
     <section id = 'onlineUserArea'>
 			<div id = 'onlineUserHead'>Online Users</div>
-			<div id = 'usersDisplay'></div>
+			<div id = 'usersDisplay'>
+			</div>
     </section>
     <section id = 'channelArea'>
 			<div id = 'channelHeading'>
@@ -33,12 +59,13 @@
 						<span><a href = '/channel/<%= channel.channelName %>'><%= channel.channelName %></a></span>
 					<% }); %>
 				</div>
-				<span><a href = '/logout'>Logout</a></span>
-				<span id = 'messageSpan' onclick="privateMessageHandlerFunctions.showMessageViewToDisplayMessages()">Messages</span>
+				<span onclick="privateMessageHandlerFunctions.showMessageViewToDisplayMessages()">Messages</span>
+				<span id = 'createChannelButton'>Create Channel</span>
+				<span id = 'logoutButton'>Logout</span>
 			</div>
     </section>
     <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
-		<div id = 'sendMessage'>Send</div>
+		<div id = 'sendMessage'>POST</div>
   </body>
   <% include footer.html %>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
@@ -47,15 +74,5 @@
 	</script>
 	<script src = '/js/privateMessageHandler.js'></script>
 	<script src = '/js/globalChat.js'></script>
-	<script>
-	  var channelListHeading = $('#channelListHeading'),
-		    channelList = $('#channelList'),
-				chatDisplay = $('#chatDisplay');
-	  channelListHeading.click(function(){
-			channelList.toggle(function(){
-				channelList.css('height', '40%');
-			});
-		});
-		console.log($('#chatDisplay').height());
-	</script>
+	<script src = '/js/channelList.js'></script>
 </html>

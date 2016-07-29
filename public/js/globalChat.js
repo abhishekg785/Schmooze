@@ -68,7 +68,7 @@
         dateStringPrev = messages[i-1].date.split("T")[0];
         if(dateStringCurr != dateStringPrev){
           var logLastDate = messages[i-1].date;
-          chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
+          chatDisplay.append("<span style = 'color:#c0392b'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
         }
       }
       var item = "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
@@ -76,7 +76,7 @@
     });
     if(messages.length > 0){
       var logLastDate = messages[messages.length - 1].date;
-      chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
+      chatDisplay.append("<span style = 'color:#c0392b'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
     }
     GlobalChatFunctions.scrollDivToHeight('chatDisplay');
   });
