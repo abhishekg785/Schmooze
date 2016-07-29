@@ -1,0 +1,61 @@
+  @media (max-width : 1025px){
+    #channelArea{
+      display: none;
+    }
+
+    #onlineUserArea{
+      display: none;
+    }
+
+    #chatArea{
+      width : 100%;
+      left: 0px;
+    }
+
+    #chatHeading{
+      height: 40px;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    #chatDisplay{
+      top:40px;
+      height: 89%;
+    }
+
+    #chatDisplay li{
+      font-size: 2.2em;
+    }
+
+    #messageText{
+      height: 35px;
+      font-size: 1em;
+    }
+
+    #sendMessage{
+      font-size: 1em;
+      height: 37px;
+    }
+  }
+
+  @media (max-width : 500px){
+    #chatDisplay{
+      /*background-color: red;*/
+      top:55px;
+      overflow-y: auto;
+      height: 84%;
+    }
+
+    #chatHeading{
+      font-size: 9.5px;
+      height: 55px;
+    }
+
+    #sendMessage{
+      display: none;
+    }
+
+    #messageText{
+      width: 100%;
+    }
+  }

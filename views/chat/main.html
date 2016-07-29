@@ -10,69 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />
-		<style>
-		  @media (max-width : 1025px){
-				#channelArea{
-					display: none;
-				}
-
-				#onlineUserArea{
-					display: none;
-				}
-
-				#chatArea{
-					width : 100%;
-					left: 0px;
-				}
-
-				#chatHeading{
-					height: 40px;
-					font-size: 10px;
-					text-align: center;
-				}
-
-        #chatDisplay{
-					top:40px;
-					height: 89%;
-				}
-
-				#chatDisplay li{
-					font-size: 2.2em;
-				}
-
-				#messageText{
-					height: 35px;
-					font-size: 1em;
-				}
-
-				#sendMessage{
-					font-size: 1em;
-					height: 35px;
-				}
-			}
-
-			@media (max-width : 500px){
-				#chatDisplay{
-					/*background-color: red;*/
-					top:55px;
-					overflow-y: auto;
-					height: 84%;
-				}
-
-        #chatHeading{
-					font-size: 9.5px;
-					height: 55px;
-				}
-
-				#sendMessage{
-					display: none;
-				}
-
-				#messageText{
-					width: 100%;
-				}
-			}
-		</style>
+		<link rel="stylesheet" href="/css/chatResponsive.css" />
 	</head>
   <body>
 		<% include messageView.html %>
@@ -112,5 +50,5 @@
 	</script>
 	<script src = '/js/privateMessageHandler.js'></script>
 	<script src = '/js/globalChat.js'></script>
-	<script src = '/js/channelList.js'></script>
+	<script src = '/js/channel/channelList.js'></script>
 </html>
