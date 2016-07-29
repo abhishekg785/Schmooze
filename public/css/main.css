@@ -71,7 +71,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	#chatDisplay{
 		height:91%;
 		width: 100%;
-		top:56px;
+		top:53px;
 		position: absolute;
 		overflow-y: auto;
 		font-size: 5px;
