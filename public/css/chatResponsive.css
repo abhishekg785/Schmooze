@@ -36,11 +36,31 @@
       font-size: 1em;
       height: 37px;
     }
+
+    #showChannelSlide{
+      height: 40px;
+      display: block;
+      width: 5%;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    #showUserSlide{
+      display: block;
+      height: 40px;
+      width: 5%;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    #chatHeading{
+      left : 5%;
+      width: 90%;
+    }
   }
 
   @media (max-width : 500px){
     #chatDisplay{
-      /*background-color: red;*/
       top:55px;
       overflow-y: auto;
       height: 84%;
@@ -49,6 +69,8 @@
     #chatHeading{
       font-size: 9.5px;
       height: 55px;
+      width : 84%;
+      left: 8%;
     }
 
     #sendMessage{
@@ -57,5 +79,20 @@
 
     #messageText{
       width: 100%;
+    }
+
+    #showChannelSlide{
+      height: 55px;
+      display: block;
+      width: 8%;
+      padding-top: 12px;
+
+    }
+
+    #showUserSlide{
+      display: block;
+      height: 55px;
+      width: 8%;
+      padding-top: 12px;
     }
   }

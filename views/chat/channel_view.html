@@ -16,6 +16,12 @@
   <body>
 		<% include messageView.html %>
     <section id = 'chatArea'>
+			<div id = 'showChannelSlide'>
+				>
+			</div>
+			<div id = 'showUserSlide'>
+				<
+			</div>
 			<div id = 'chatHeading'>Welcome to the channel "<%= channelName %>" : <%= channelDescription %></div>
 			<div id = 'chatDisplay'>
 			</div>
@@ -55,4 +61,5 @@
 	<script src = '/js/privateMessageHandler.js'></script>
   <script src = "/js/channel/channel.js"></script>
 	<script src = '/js/channel/channelList.js'></script>
+	<script src  = '/js/channel/chatResponsive.js'></script>
 </html>

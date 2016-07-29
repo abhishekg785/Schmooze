@@ -312,6 +312,28 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		width: 100%;
 		text-align: center;
 	}
+
+  #showChannelSlide{
+		background-color: #1abc9c;
+		position: absolute;
+		top:0px;
+		z-index: 9;
+		display: none;
+		left:0px;
+		text-align: center;
+		font-weight: bold;
+	}
+
+  #showUserSlide{
+		position: absolute;
+		right : 0px;
+		display: none;
+		background-color: #1abc9c;
+		top : 0px;
+		z-index: 9;
+		text-align: center;
+		font-weight: bold;
+	}
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block;
 	}
