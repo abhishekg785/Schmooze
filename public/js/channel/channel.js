@@ -5,10 +5,25 @@ var channelName = $('#channelName').val(),
     usersDisplay = $('#usersDisplay'),
     channelList = $('#channelList'),
     channelCount = $('#channelCount'),
+    loggedUser = $('#loggedUser').val(),
     botName = 'bot@ARON';
 
-console.log('CHANNEL NAME IS' + channelName);
-console.log('IN THE SOCKET FUNCTIONS' + channelName);
+/*
+*  color schemes
+*  aaronBot : #2c3e50
+*  loggedUserMessage : #8e44ad
+*  usermessage : #fff
+*  logText : #c0392b
+*  @user Noti : #e74c3c
+*/
+var colorSchemes = {
+  aronBot : '#2c3e50',
+  loggedUserMessage : '#8e44ad',
+  usermessage : '#fff',
+  logText : '#c0392b',
+  userNoti : '#e74c3c'
+};
+
 var ChannelFunctions = {
   sendMessage : function(){
     var messageText = $('#messageText').val();
@@ -42,9 +57,8 @@ messageText.on('keypress', function(e){
 
 socket.on('new channel message', function(data){
   var sender = data.sender,
-      messageText = data.messageText,
-      // item = sender + ':' + messageText + '<br/>';
-      item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
+      messageText = data.messageText;
+  sender != loggedUser ? item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>" : item = "<li class = 'loggedUser'><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
   chatDisplay.append(item);
   ChannelFunctions.scrollDivToHeight('chatDisplay');
 });
@@ -53,7 +67,12 @@ socket.on('channel user update', function(data){
   usersDisplay.empty();
   var users = data.users;
   users.forEach(function(user){
-    var item = "<span onclick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + user + '"' + ")'>" + user + "</span>";
+    if(user == loggedUser){
+      var item = "<span class = 'onlineLoggedUser' onclick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + user + '"' + ")'>" + user + "</span>";
+    }
+    else{
+      var item = "<span onclick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + user + '"' + ")'>" + user + "</span>";
+    }
     usersDisplay.append(item);
   });
 });
@@ -70,15 +89,20 @@ socket.on('set channel messages', function(data){
       dateStringPrev = messages[i-1].date.split("T")[0];
       if(dateStringCurr != dateStringPrev){
         var logLastDate = messages[i-1].date;
-        chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
+        chatDisplay.append("<span class = 'chatLogs'><li>----Above session logs from " + logLastDate +"----</li></span>");
       }
     }
-    var item = username != botName ? "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>" : "<li style = 'color:orange;font-size:10px;'><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+    if(username == loggedUser){
+      var item = "<li class = 'loggedUser'><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+    }
+    else{
+      var item = username != botName ? "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>" : "<li class = 'botClass' style = 'font-size:11px'><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+    }
     chatDisplay.append(item);
   });
   if(messages.length > 0){
     var logLastDate = messages[messages.length - 1].date;
-    chatDisplay.append("<span style = 'color:orange'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
+    chatDisplay.append("<span class = 'chatLogs'><li>----Above session logs from " + logLastDate +"----</li></span>");
   }
   ChannelFunctions.scrollDivToHeight('chatDisplay');
 });
@@ -117,6 +141,6 @@ socket.on('terminate', function(data){
 });
 
 socket.on('new log message', function(data){
-  chatDisplay.append("<span style = 'color:orange; text-align:center'><li>------------------------" + data.logMessage +"-------------------</li></span>");
+  chatDisplay.append("<span class = 'chatLogs'><li>----" + data.logMessage +"----</li></span>");
   ChannelFunctions.scrollDivToHeight('chatDisplay');
 });
