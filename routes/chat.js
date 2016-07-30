@@ -2,7 +2,7 @@
 * author: abhishek goswami
 * abhishekg785@gmail.com
 *
-*  chat handler module
+*  chat.js : chat handler module
 */
 
 var express = require('express');

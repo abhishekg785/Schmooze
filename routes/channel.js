@@ -1,3 +1,10 @@
+/*
+*  author : abhishek goswami (hiro)
+*  abhishekg785@gmail.com
+*
+*  channel.js file : handling channel views
+*/
+
 var express = require('express');
 var router = express.Router();
 var ChannelModel = require('../models/channelSchema');

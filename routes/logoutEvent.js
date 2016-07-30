@@ -1,3 +1,10 @@
+/*
+*  author : abhishek goswami (hiro)
+*  abhishekg785@gmail.com
+*
+*  logoutEvent.js : file for handling user logout from each and every tab or open session
+*/
+
 var express = require('express');
 var router = express.Router();
 var socketFunctions = require('../shared/socketFunctions');
