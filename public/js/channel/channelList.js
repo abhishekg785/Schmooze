@@ -1,25 +1,32 @@
-  var channelListHeading = $('#channelListHeading'),
-      channelList = $('#channelList'),
-      chatDisplay = $('#chatDisplay'),
-      createChannelButton = $('#createChannelButton'),
-      logoutButton = $('#logoutButton'),
-      isVisible = false;
+/*
+*  author : abhishek goswami
+*  abhishekg785@gmail.com
+*
+*  channelList.js
+*/
 
-  channelListHeading.click(function(){
-    if(isVisible === false){
-      channelList.css('height', '25%');
-      isVisible = true;
-    }
-    else if(isVisible === true){
-      channelList.css('height', '0');
-      isVisible = false;
-    }
-  });
+var channelListHeading = $('#channelListHeading'),
+    channelList = $('#channelList'),
+    chatDisplay = $('#chatDisplay'),
+    createChannelButton = $('#createChannelButton'),
+    logoutButton = $('#logoutButton'),
+    isVisible = false;
 
-  createChannelButton.click(function(){
-    window.location = '/channel/#two';
-  });
+channelListHeading.click(function(){
+  if(isVisible === false){
+    channelList.css('height', '25%');
+    isVisible = true;
+  }
+  else if(isVisible === true){
+    channelList.css('height', '0');
+    isVisible = false;
+  }
+});
 
-  logoutButton.click(function(){
-    window.location = '/logout';
-  });
+createChannelButton.click(function(){
+  window.location = '/channel/#two';
+});
+
+logoutButton.click(function(){
+  window.location = '/logout';
+});

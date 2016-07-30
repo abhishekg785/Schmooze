@@ -1,3 +1,10 @@
+/*
+*  author ; abhishek goswami
+*  abhishekg785@gmail.com
+*
+*  channel.js 
+*/
+
 var channelName = $('#channelName').val(),
     sendMessage = $('#sendMessage'),
     messageText = $('#messageText'),

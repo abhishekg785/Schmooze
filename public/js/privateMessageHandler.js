@@ -1,3 +1,10 @@
+/*
+*  author : abhishek goswami (hiro)
+*  abhishekg785@gmail.com
+*
+*  privateMessageHandler.js
+*/
+
 var messageView = $('#messageView'),
     messageViewCancel = $('#messageViewCancel'),
     messageViewHeading = $('#messageViewHeading'),

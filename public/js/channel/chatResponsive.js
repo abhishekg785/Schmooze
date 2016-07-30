@@ -3,7 +3,6 @@
 *  abhishekg785@gmail.com
 *
 *  chatResponsive.js : js file to make the overall chat exp respossive
-*  < code is creepy :) ! forgive me for that >
 */
 
   var showChannelSlide = $('#showChannelSlide'),
