@@ -14,6 +14,7 @@ var IgnoreWordArr = [
   'window'
 ];
 
+
 var HTMLCutterFunctions = {
   bracketCutter : function(htmlString){
     if(htmlString.indexOf("<") == -1 && htmlString.indexOf(">") == -1 ){        /* base condition of the recursion */
@@ -39,6 +40,19 @@ var HTMLCutterFunctions = {
       htmlString = htmlString.replace('&', "'and'");
       return HTMLCutterFunctions.symbolCutter(htmlString);
     }
+  },
+
+  /*
+  *  linkify will add links to all the strings where it matches http:// or wwww.
+  */
+  linkify : function(HTMLString){
+    console.log('IN THE REGEX FUNCTION');
+    var pattern1 =  /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim ,  /* url starting with http:// or https:// or ftp:// */
+        pattern2 =  /(^|[^\/])(www\.[\S]+(\b|$))/gim;    /* string starting with www.*/
+        parsedString = '';
+    parsedString = HTMLString.replace(pattern1, '<a style = "color:#8e44ad" href="$1" target="_blank">$1</a>');
+    parsedString = parsedString.replace(pattern2, '$1<a style = "color:#8e44ad" href="http://$2" target="_blank">$2</a>');
+    return parsedString;
   }
 }
 
@@ -48,5 +62,6 @@ module.exports = function(HTMLString){     /* HTML is the passed string to work 
     HTMLString = HTMLCutterFunctions.symbolCutter(HTMLString);
   }
   var parsedString = HTMLCutterFunctions.bracketCutter(HTMLString);
+  parsedString = HTMLCutterFunctions.linkify(parsedString);
   return parsedString;
 }
