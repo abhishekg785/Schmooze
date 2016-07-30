@@ -8,7 +8,9 @@
 /*
 *  /swish : for sending private messages
 *  /join : for joining a channel
+*  @<username> message to mention the user in the chat
 */
+
 var socketFunctions = require('./socketFunctions');
 var commands = {
   private_messaging : {

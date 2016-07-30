@@ -1,3 +1,10 @@
+/*
+*   abhishek goswami (hiro)
+*   abhishekg785@gmail.com
+*
+*   session-service.js  file for handling user sessions
+*/
+
 var config = require('../config');
 
 var redisClient = null;
@@ -16,7 +23,6 @@ var self = module.exports = {
     get: function (handshake, callback) {
       console.log('IN THE GET FUNCTION');
         var sessionId = self.getSessionId(handshake);
-        console.log(sessionId);
         self.getSessionBySessionID(sessionId, function (err, session) {
             if (err) callback(err);
             if (callback != undefined)
@@ -40,22 +46,5 @@ var self = module.exports = {
             else
                 callback(null);
         });
-    },
-
-    updateSession: function (session, callback) {
-        try {
-            session.reload(function () {
-                session.touch().save();
-                callback(null, session);
-            });
-        }
-        catch (err) {
-            callback(err);
-        }
-    },
-
-    setSessionProperty: function (session, propertyName, propertyValue, callback) {
-        session[propertyName] = propertyValue;
-        self.updateSession(session, callback);
     }
 };
