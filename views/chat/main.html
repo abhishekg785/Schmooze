@@ -51,6 +51,7 @@
     </section>
     <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
 		<div id = 'sendMessage'>POST</div>
+		<input type = 'hidden' value = "<%= username %>" id = 'loggedUser'/>
   </body>
   <% include footer.html %>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>

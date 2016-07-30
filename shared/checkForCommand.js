@@ -108,6 +108,41 @@ module.exports = commandFunctions = {
         return statusMessage['command_err'];
       }
     }
+
+    /* check for command starting with @ */
+    else if(messageText.indexOf('@') != -1 && messageText.indexOf('@') == 0){
+      var firstSpaceIndex = messageText.indexOf(' ');
+      var firstSplitString = messageText.substr(0, firstSpaceIndex);
+      if(firstSplitString.length > 1){
+        var username = messageText.substr(0, firstSpaceIndex).replace('@',''),                   /* name of the receiver */
+            messageText = messageText.substr(firstSpaceIndex, messageText.length).trim();
+        messageText = username + ' : ' + messageText;
+        var data = {
+          'messageText' : messageText
+        }
+        /*
+        *   check for username if it exists online or not
+        */
+        var loggedUsers = socketFunctions.getUsersArray();
+        if(loggedUsers.indexOf(username) != -1){
+          if(socket.channelName != undefined){
+            io.sockets.in(socket.channelName).emit('new channel message for a user', {'sender' : socket.username, 'messageText' : messageText, 'receiver' : username});
+            socketFunctions.channelMessageHandler(socket, data);
+          }
+          else{
+            /* it is a group message */
+            io.emit('new group message for a user', {'sender' : socket.username, 'messageText' : messageText, 'receiver' : username});
+            socketFunctions.groupMessageHandler(socket, data);
+          }
+        }
+        else{
+          return statusMessage['no_user'];
+        }
+      }
+      else{
+        return statusMessage['invalid_command'];
+      }
+    }
     else{
       return false;
     }

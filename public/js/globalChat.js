@@ -6,7 +6,8 @@
       chatHeading = $('#chatHeading'),
       chatDisplay = $('#chatDisplay'),
       usersDisplay = $('#usersDisplay'),
-      messageSpan = $('#messageSpan');
+      messageSpan = $('#messageSpan'),
+      loggedUser = $('#loggedUser').val();
 
   var GlobalChatFunctions = {
     sendMessage : function(){
@@ -33,7 +34,12 @@
     usersDisplay.empty();
     users = data.users;
     for(var i = 0 ; i < users.length; i++){
-      var list = "<span onClick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + users[i] + '"' + ")'>" + users[i] + "</span>";
+      if(users[i] == loggedUser){
+        var list = "<span class = 'onlineLoggedUser'>" + users[i] + "</span>";
+      }
+      else{
+        var list = "<span onClick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + users[i] + '"' + ")'>" + users[i] + "</span>";
+      }
       usersDisplay.append(list);
     }
   });
@@ -51,7 +57,22 @@
   socket.on('new group message', function(data){
     var sender = data.sender,
         messageText = data.messageText;
-        item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
+        sender != loggedUser ? item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>" : item = "<li class = 'loggedUser'><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
+    chatDisplay.append(item);
+    GlobalChatFunctions.scrollDivToHeight('chatDisplay');
+  });
+
+  socket.on('new group message for a user', function(data){
+    var sender = data.sender,
+        messageText = data.messageText,
+        receiver = data.receiver;
+    if(loggedUser == receiver){
+      console.log('receiver' + receiver);
+      var item = "<li style = 'color:red'><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>"
+    }
+    else{
+      sender != loggedUser ? item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>" : item = "<li class = 'loggedUser'><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
+    }
     chatDisplay.append(item);
     GlobalChatFunctions.scrollDivToHeight('chatDisplay');
   });
@@ -64,14 +85,19 @@
           date = message.date,
           username = message.username,
           dateStringCurr = date.split("T")[0];
-      if(i>0){
+      if(i > 0){
         dateStringPrev = messages[i-1].date.split("T")[0];
         if(dateStringCurr != dateStringPrev){
           var logLastDate = messages[i-1].date;
           chatDisplay.append("<span style = 'color:#c0392b'><li>------------------------Above session logs from " + logLastDate +"-------------------</li></span>");
         }
       }
-      var item = "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+      if(username == loggedUser){
+        var item = "<li class = 'loggedUser'><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+      }
+      else{
+        var item = "<li><span class = 'uname'>"+ username +"</span> : "+ messageText +"</li>";
+      }
       chatDisplay.append(item);
     });
     if(messages.length > 0){

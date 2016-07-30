@@ -63,12 +63,27 @@ socket.on('new channel message', function(data){
   ChannelFunctions.scrollDivToHeight('chatDisplay');
 });
 
+socket.on('new channel message for a user', function(data){
+  var sender = data.sender,
+      messageText = data.messageText,
+      receiver = data.receiver;
+  if(loggedUser == receiver){
+    console.log('receiver' + receiver);
+    var item = "<li style = 'color:red'><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>"
+  }
+  else{
+    sender != loggedUser ? item = "<li><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>" : item = "<li class = 'loggedUser'><span class = 'uname'>"+ sender +"</span> : "+ messageText +"</li>";
+  }
+  chatDisplay.append(item);
+  ChannelFunctions.scrollDivToHeight('chatDisplay');
+});
+
 socket.on('channel user update', function(data){
   usersDisplay.empty();
   var users = data.users;
   users.forEach(function(user){
     if(user == loggedUser){
-      var item = "<span class = 'onlineLoggedUser' onclick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + user + '"' + ")'>" + user + "</span>";
+      var item = "<span class = 'onlineLoggedUser'>" + user + "</span>";
     }
     else{
       var item = "<span onclick = 'privateMessageHandlerFunctions.showMessageViewToSendMessages("+ '"' + user + '"' + ")'>" + user + "</span>";
