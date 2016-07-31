@@ -350,6 +350,40 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		font-weight: bold;
 	}
 
+  #commandView{
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top:0px;
+		left: 0px;
+		background-color:#3498db;
+		z-index: 10;
+		opacity:0.95;
+		display: none;
+	}
+
+	#commandViewHeading{
+		width: 100%;
+		text-align: center;
+	}
+
+  #closeCommandView{
+		font-weight: bold;
+		color: #2c3e50;
+		cursor: pointer;
+		position: absolute;
+		right: 0px;
+		margin-right: 5px;
+	}
+
+	#commandList ul{
+		list-style: none;
+	}
+
+  #commandList ul li{
+		padding-bottom: 5px;
+	}
+
 	.loggedUser{
 		/*color: #8e44ad;*/
 		color: #f1c40f;

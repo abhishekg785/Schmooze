@@ -15,6 +15,7 @@
 	</head>
   <body>
 		<% include messageView.html %>
+		<% include commandViewTemplate.html %>
     <section id = 'chatArea'>
 			<div id = 'showChannelSlide'>
 				>
@@ -38,9 +39,7 @@
 				<span id = 'channelListHeading'>Channels</span>
 				<div id = 'channelList'>
 				</div>
-				<span id = 'createChannelButton'>Create Channel</span>
-				<span id = 'messageSpan' onclick="privateMessageHandlerFunctions.showMessageViewToDisplayMessages()">Messages</span>
-				<span id = 'logoutButton'>Logout</span>
+        <% include channelViewTemplate.html %>
 			</div>
     </section>
     <input id = 'messageText' type = 'text' placeholder="Type Message here..."/>
@@ -63,4 +62,8 @@
   <script src = "/js/channel/channel.js"></script>
 	<script src = '/js/channel/channelList.js'></script>
 	<script src  = '/js/channel/chatResponsive.js'></script>
+	<script src = '/js/channel/shared.js'></script>
+	<script>
+
+  </script>
 </html>
