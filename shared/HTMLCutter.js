@@ -46,7 +46,6 @@ var HTMLCutterFunctions = {
   *  linkify will add links to all the strings where it matches http:// or wwww.
   */
   linkify : function(HTMLString){
-    console.log('IN THE REGEX FUNCTION');
     var pattern1 =  /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim ,  /* url starting with http:// or https:// or ftp:// */
         pattern2 =  /(^|[^\/])(www\.[\S]+(\b|$))/gim;    /* string starting with www.*/
         parsedString = '';

@@ -16,7 +16,9 @@ var messageView = $('#messageView'),
     privateMessageText = $('#privateMessageText'),
     privateMessageArr = [],
     receiver = "",
-    messageSpan = $('#messageSpan');
+    messageSpan = $('#messageSpan'),
+    chatLogList = $('#chatLogList'),
+    loggedUser = $('#loggedUser');
 
 var privateMessageHandlerFunctions = {
   showMessageView : function(){
@@ -86,6 +88,7 @@ var privateMessageHandlerFunctions = {
       privateMessageText.val('');
       sendPrivateMessageButton.text('Send');
       privateMessageReceiverInfo.text('Message sent Successfully :)');
+      // chatLogList.append('<i>You</i>' + ':' + ' ' + '<span class = "loggedUser">' + messageText + '</span><br/>');
     }
     else{
       alert('Message Field is required !');
@@ -94,7 +97,7 @@ var privateMessageHandlerFunctions = {
 
   realTimeMessageView : function(data){
     var item = '<li><span style="color:#34495e"><i>'+ data.sender +'</i></span> : '+ data.messageText +'</li>';
-    console.log(privateMessageArr.length);
+    // chatLogList.append(data.sender + ': ' + '<span style = "color:white">' + data.messageText + '</span>' + '<br/>');
     if(privateMessageArr.length <= 1){
       messageViewMessages.empty();
       messageViewMessages.append(item);

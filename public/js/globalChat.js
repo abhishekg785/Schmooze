@@ -34,6 +34,12 @@ var GlobalChatFunctions = {
 
   scrollDivToHeight : function(divName){
     $("#" + divName).animate({ scrollTop: $('#' + divName)[0].scrollHeight }, 1000);
+  },
+
+  playAlertMusic : function(){
+    var aSound = document.createElement('audio');
+    aSound.setAttribute('src', '/media/alert.wav');
+    aSound.play();
   }
 }
 
@@ -132,6 +138,7 @@ socket.on('new private message', function(data){
   messageSpan.css('color', 'red');
   privateMessageHandlerFunctions.pushPrivateMessage(data);
   privateMessageHandlerFunctions.realTimeMessageView(data);
+  GlobalChatFunctions.playAlertMusic();
 });
 
 socket.on('new log message', function(data){

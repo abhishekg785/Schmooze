@@ -2,7 +2,7 @@
 *  author ; abhishek goswami
 *  abhishekg785@gmail.com
 *
-*  channel.js 
+*  channel.js
 */
 
 var channelName = $('#channelName').val(),
@@ -23,6 +23,7 @@ var channelName = $('#channelName').val(),
 *  logText : #c0392b
 *  @user Noti : #e74c3c
 */
+
 var colorSchemes = {
   aronBot : '#2c3e50',
   loggedUserMessage : '#8e44ad',
@@ -49,6 +50,12 @@ var ChannelFunctions = {
 
   scrollDivToHeight : function(divName){
     $("#" + divName).animate({ scrollTop: $('#' + divName)[0].scrollHeight }, 1000);
+  },
+
+  playAlertMusic : function(){
+    var aSound = document.createElement('audio');
+    aSound.setAttribute('src', '/media/alert.wav');
+    aSound.play();
   }
 }
 
@@ -154,6 +161,7 @@ socket.on('join channel command', function(data){
 
 socket.on('new private message', function(data){
   messageSpan.css('color', 'red');
+  ChannelFunctions.playAlertMusic();
   privateMessageHandlerFunctions.pushPrivateMessage(data);
   privateMessageHandlerFunctions.realTimeMessageView(data);
 });
