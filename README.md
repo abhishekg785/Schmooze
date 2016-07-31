@@ -45,7 +45,10 @@ cd into the project directory.<br/>
 Run "sudo npm install" to install all the node dependencies required by the project. 
 Run node bin/www to run the project.<br/>
 
-<h2>Please create an issue if anything goes wrong with the project.</h2>
+<h3>Contribute :)</h3>
+Feel free to contribute to the project.<br/>
+Create an issue if you find anything wrong with the project.
+<h2>Simply Fork, Clone and send Pull Request :)</h2>
 
 
 
