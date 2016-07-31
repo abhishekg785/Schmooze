@@ -1,6 +1,6 @@
 var params = {
-  'sessionSecret':'life_is_strange',
-  'sessionCookieKey':'life_is_shit'
+  'sessionSecret':' any random string  ',
+  'sessionCookieKey':'any random string '
 };
 
 module.exports = params;
