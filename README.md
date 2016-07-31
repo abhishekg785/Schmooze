@@ -46,7 +46,6 @@ Add the following content in the file :<br/>
 <code>
   var params = {
     'sessionSecret':'choose one',
-    
     'sessionCookieKey':choose one'
   };
   module.exports = params;
