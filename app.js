@@ -2,7 +2,7 @@
 * author: abhishek goswami
 * abhishekg785@gmail.com
 *
-* socket.io main flow code here
+* app.js : conatins the necessary requirements for the project
 */
 
 module.exports = function(app, io, express){
