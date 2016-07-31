@@ -28,19 +28,25 @@ router.get('/login', check_login, function(req, res, next) {
 
 router.post('/login', check_login, function(req,res){
   var username = HTMLCutter(req.body.username);
-  if(username.length > 3){
-    var onlineUsers = socketFunctions.getUsersArray();
-    var userIndex = onlineUsers.indexOf(username);
-    if(userIndex == -1){
-      req.session.username = username;
-      res.redirect('/channel');
+  var spaceIndex = username.indexOf(' ');
+  if(spaceIndex == -1){
+    if(username.length > 3){
+      var onlineUsers = socketFunctions.getUsersArray();
+      var userIndex = onlineUsers.indexOf(username);
+      if(userIndex == -1){
+        req.session.username = username;
+        res.redirect('/channel');
+      }
+      else{
+        res.render('index', {'message':'Nickname is taken at the moment!  Try with another nickname'});
+      }
     }
     else{
-      res.render('index', {'message':'Nickname is taken at the moment!  Try with another nickname'});
+      res.render('index', {'message':'Nickname Field must have atleast 4 chars'});
     }
   }
-  else{
-    res.render('index', {'message':'Nickname Field must have atleast 4 chars'});
+  else {
+    res.render('index', {'message' : 'Nickname cannot have spaces :)'});
   }
 });
 

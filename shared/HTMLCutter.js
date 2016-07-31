@@ -57,6 +57,7 @@ var HTMLCutterFunctions = {
 
 module.exports = function(HTMLString){     /* HTML is the passed string to work on */
   // console.log(HTML);
+  HTMLString = HTMLString.trim();
   if(HTMLString.indexOf('&') != -1){
     HTMLString = HTMLCutterFunctions.symbolCutter(HTMLString);
   }

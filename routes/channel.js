@@ -8,6 +8,7 @@
 var express = require('express');
 var router = express.Router();
 var ChannelModel = require('../models/channelSchema');
+var HTMLCutter = require('../shared/HTMLCutter');
 
 /* middleware for checking if a user is logged in or not */
 function checkLogin(req, res, next){
@@ -43,8 +44,8 @@ router.post('/', checkLogin, function(req, res){
     if(!err){
       if(!data.length){
         var newChannel = ChannelModel({
-          'channelName' : channelName,
-          'channelDescription' : channelDesc,
+          'channelName' : HTMLCutter(channelName),
+          'channelDescription' : HTMLCutter(channelDesc),
           'channelOwner' : req.session.username
         });
         newChannel.save();
