@@ -41,8 +41,11 @@ Ensure you have latest version of node and npm installed.<br/>
 Check for node version by using node --version in your terminal (v >= 4.3.0).
 
 <h3>Step 5</h3>
-"sudo npm install" to install all the node dependencies required by the project. 
+cd into the project directory.<br/>
+Run "sudo npm install" to install all the node dependencies required by the project. 
+Run node bin/www to run the project.<br/>
 
+<h2>Please create an issue if anything goes wrong with the project.</h2>
 
 
 
