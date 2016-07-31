@@ -1,5 +1,4 @@
 # Schmooze
-<hr/>
 An real time multi-platform, multi-channel web app for online Discussion and Learning. The project is aimed to conduct the online group sessions for students  of the National Institute of Technology, Kurukshetra.
 <h2>The project have:</h2>
 
@@ -27,6 +26,22 @@ Node.js And Express for the server side<br/>
 Simple HTML5 and CSS3 for the front-end.<br/>
 MongoDB and Mongoose for Database Management.
 
+<h2>Schmooze Setup</h2>
+<h3>Step 1</h3>
+Fork/Clone the project.
+
+<h3>Step 2</h3>
+Install Redis on your computer.
+
+<h3>Step 3</h3>
+Install and setup MongoDB on the computer and ensure to that it runs successfully.
+
+<h3>Step 4</h3>
+Ensure you have latest version of node and npm installed.<br/>
+Check for node version by using node --version in your terminal (v >= 4.3.0).
+
+<h3>Step 5</h3>
+"sudo npm install" to install all the node dependencies required by the project. 
 
 
 
