@@ -41,15 +41,23 @@ Ensure you have latest version of node and npm installed.<br/>
 Check for node version by using node --version in your terminal (v >= 4.3.0).
 
 <h3>Step 5</h3>
+Create a config.js file in the project directory.<br/>
+Add the following content in the file :<br/>
+<code>
+  var params = {
+    'sessionSecret':'choose one',
+    'sessionCookieKey':choose one'
+  };
+
+  module.exports = params;
+</code>
+
+<h3>Step 6</h3>
 cd into the project directory.<br/>
-Run "sudo npm install" to install all the node dependencies required by the project. 
+Run "sudo npm install" to install all the node dependencies required by the project.
 Run node bin/www to run the project.<br/>
 
 <h3>Contribute :)</h3>
 Feel free to contribute to the project.<br/>
 Create an issue if you find anything wrong with the project.
 <h2>Simply Fork, Clone and send Pull Request :)</h2>
-
-
-
-
