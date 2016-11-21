@@ -12,6 +12,7 @@
     $.ajax({
       url : 'http://localhost:8080/the/bo',
       type : 'GET',
+      dataType : 'jsonp',
       success : function(data){
         console.log(data);
       },
