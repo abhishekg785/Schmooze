@@ -1,0 +1,24 @@
+<!-- /*
+*  author : abhishekg785@gmail.com
+*  module for getting suggestions on the basis of the autocompletion
+*/ -->
+
+<html>
+<head>
+</head>
+<body>
+  <script src = 'js/jquery.min.js'></script>
+  <script>
+    $.ajax({
+      url : 'http://localhost:8080/the/bo',
+      type : 'GET',
+      success : function(data){
+        console.log(data);
+      },
+      error : function(error){
+        console.log(error);
+      }
+    });
+  </script>
+</body>
+</html>

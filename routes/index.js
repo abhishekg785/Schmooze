@@ -76,4 +76,9 @@ router.post('/contact/', function(req, res){
   });
 });
 
+// autocompletion demo
+router.get('/autocomplete', function(req, res){
+  res.render('autocomplete');
+});
+
 module.exports = router;
