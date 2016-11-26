@@ -12,6 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />
 		<link rel="stylesheet" href="/css/chatResponsive.css" />
+		<link rel = "stylesheet" href = "/css/suggestions.css" />
 	</head>
   <body>
 		<% include messageView.html %>
@@ -46,6 +47,11 @@
 		<div id = 'sendMessage'>Send</div>
 		<input type = "hidden" value = "<%= username %>" id = 'loggedUser' />
     <input type = "hidden" value = "<%= channelName %>" id = 'channelName' />
+    <div id = 'suggestionView'>
+	    <ul>
+	       <!-- show data here -->	       
+	    </ul>
+	</div>
   </body>
   <% include footer.html %>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>

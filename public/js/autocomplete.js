@@ -6,7 +6,9 @@
 */
 
 (function(d) {
-  var messageText = $('#messageText');
+  var messageText = $('#messageText'),
+      suggestionView = $('#suggestionView');
+
 
   AutocompleteFunctions = {
 
@@ -33,13 +35,52 @@
         url : url,
         type : 'GET', 
         success : function(data) {
-          console.log(data);
+          console.log('IN THE SUCCESS FUNCTION');
+          AutocompleteFunctions.ShowSuggestionView().PopulateSuggestionsInView(data);
         },
         error : function(error) {
           console.log(error);
         }
       });
+    },
+
+    ShowSuggestionView : function() {
+        suggestionView.css('display', 'block');
+        return AutocompleteFunctions;
+    },
+
+    HideSuggestionView : function() {
+        suggestionView.css('display', 'none');
+    },
+
+    PopulateSuggestionsInView : function(data) {
+      AutocompleteFunctions.ClearSuggestionView();
+      console.log('IN THE PopulateSuggestionsInView');
+      // $('#suggestionView ul').append('<li>dkckdbckjdbck</li>');
+      for(var val in data) {
+        var key = val;
+        var keyVal = data[val];
+        var item = "<li onclick = 'AutocompleteFunctions.SetSuggestionInMessageText("+ '"' + val + '"' +")' >"+ key +"</li>";
+        $('#suggestionView ul').append(item);
+      }
+    },
+
+    ClearSuggestionView : function() {
+      $('#suggestionView ul').empty();
+    },
+
+    SetSuggestionInMessageText : function(suggestion){
+      // $('#messageText').val($('#messageText').val() + ' ' + suggestion);
+      var pervMessageText = $('#messageText').val();
+      var prevMessageWordArray = pervMessageText.split(' ');
+      var lastWordIndex = prevMessageWordArray.length - 1;
+      prevMessageWordArray.splice(lastWordIndex);
+      prevMessageWordArray.push(suggestion);
+      var newMessage = prevMessageWordArray.join(' ');
+      $('#messageText').val(newMessage);
+      $('#messageText').focus();
     }
+    
   }
 
   /*
@@ -49,9 +90,13 @@
   */
   messageText.on('keyup', function(e) {
     var inputText = messageText.val().trim();
+    if(inputText == '') {
+      AutocompleteFunctions.HideSuggestionView();
+    }
     var wordArray = inputText.split(' ');
     var lastWord = wordArray[wordArray.length - 1];
     var secondLastWord = wordArray[wordArray.length - 2];
     AutocompleteFunctions.FetchSuggestions(lastWord, secondLastWord);
   });
+
 })(document);

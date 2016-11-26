@@ -1,0 +1,30 @@
+
+		   #suggestionView {
+		        position: absolute;
+		        height: 200px;
+		        width: 180px;
+		        bottom: 54px;
+		        background-color: lightblue;
+		        right: 205px;
+		        display: none;
+		        overflow: auto;
+		       /* border: 2px solid #34495e;*/
+		        background-color: #34495e;
+		        color: white;
+		   }
+
+		   #suggestionView ul{
+		   	    list-style: none;
+		   	    text-align: center;
+		   	    margin: 0px;
+		   	    padding: 0px;
+		   }
+
+		   #suggestionView ul li{
+		   	    cursor: pointer;
+		   }
+
+		   #suggestionView ul li:hover{
+		   	    background-color: #1abc9c;
+		   	    font-style: italic;
+		   }
