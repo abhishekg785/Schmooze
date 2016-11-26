@@ -48,7 +48,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 		left:15%;
 		list-style: none;
 		font-family: "Courier New", monospace;
-		background-color:#16a085;
+		/*background-color:#16a085;*/
+		background-color: white;
 		color:#fff;
 	}
 
