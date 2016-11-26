@@ -17,7 +17,7 @@ var IgnoreWordArr = [
 
 var HTMLCutterFunctions = {
   bracketCutter : function(htmlString){
-    if(htmlString.indexOf("<") == -1 && htmlString.indexOf(">") == -1 ){        /* base condition of the recursion */
+    if(htmlString.indexOf("<") == -1 && htmlString.indexOf(">") == -1 ) {        /* base condition of the recursion */
       return htmlString;
     }
     else{
@@ -31,7 +31,7 @@ var HTMLCutterFunctions = {
     }
   },
 
-  symbolCutter : function(htmlString){
+  symbolCutter : function(htmlString) {
     console.log(htmlString);
     if(htmlString.indexOf('&') == -1){
       return htmlString;
@@ -45,7 +45,7 @@ var HTMLCutterFunctions = {
   /*
   *  linkify will add links to all the strings where it matches http:// or wwww.
   */
-  linkify : function(HTMLString){
+  linkify : function(HTMLString) {
     var pattern1 =  /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim ,  /* url starting with http:// or https:// or ftp:// */
         pattern2 =  /(^|[^\/])(www\.[\S]+(\b|$))/gim;    /* string starting with www.*/
         parsedString = '';
@@ -55,7 +55,7 @@ var HTMLCutterFunctions = {
   }
 }
 
-module.exports = function(HTMLString){     /* HTML is the passed string to work on */
+module.exports = function(HTMLString) {     /* HTML is the passed string to work on */
   // console.log(HTML);
   HTMLString = HTMLString.trim();
   if(HTMLString.indexOf('&') != -1){
