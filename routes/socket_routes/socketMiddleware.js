@@ -5,7 +5,6 @@
 *  socketMiddleware.js : it will get the username from the session cookie and store it in redis store and thus we can use the things later in our app
 */
 
-
 var cookieParser = require('cookie-parser');
 var config = require('../../config');
 var sessionService = require('../../shared/session-service');
