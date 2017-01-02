@@ -20,7 +20,7 @@ function check_login(req,res,next){
 
 router.get('/',check_login,function(req,res){
   var username = req.session.username;
-  console.log(req.session.username);
+  console.log(req.session);
   SocketFunctions.getChannels(function(data){
     if(data){
       res.render('chat/main.html',{'username':username, 'channels':data});
