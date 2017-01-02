@@ -2,7 +2,7 @@
 * author: abhishek goswami
 * abhishekg785@gmail.com
 *
-* app.js : conatins the necessary requirements for the project
+* app.js : contains the necessary requirements for the project
 */
 
 module.exports = function(app, io, express){
