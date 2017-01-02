@@ -25,14 +25,7 @@ module.exports = function(app, io, express){
   var redisStore = new RedisStore({ client: redisClient });
 
   /* mongodb connection */
-  mongoose.connect('mongodb://localhost/schmooze', function(err){
-    if(!err){
-      console.log('connected to database');
-    }
-    else{
-      console.log('Error' + err);
-    }
-  });
+  var connection = require('./models/db_connect.js');
 
   /* other redis stuff */
   var sessionService = require('./shared/session-service');
@@ -171,6 +164,8 @@ module.exports = function(app, io, express){
       socketFunctions.setChannelsInDOM(io, socket);
     });
 
+    // here callback is a bidirectional callback b/w a server and a client 
+    // possible since the client and server are having a bi directional connection using socket.io
     socket.on('new channel message', function(data, callback){
       var loggedUsers = socketFunctions.getUsersArray();
       if(loggedUsers.indexOf(socket.username) == -1){
