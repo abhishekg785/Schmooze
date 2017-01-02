@@ -17,7 +17,7 @@ var self = module.exports = {
     },
 
     getSessionId: function (handshake) {
-        return handshake.signedCookies[config.sessionCookieKey];
+        return handshake[config.sessionCookieKey];
     },
 
     get: function (handshake, callback) {
