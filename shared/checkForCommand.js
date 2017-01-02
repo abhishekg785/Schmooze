@@ -35,6 +35,7 @@ var statusMessage = {
 }
 
 module.exports = commandFunctions = {
+  
   checkIfCommandORNot : function(messageText, socket, io){
     messageText = messageText.trim();
     if(messageText.indexOf('/') != -1 && messageText.indexOf('/') == 0){                    /* command starts with / */
