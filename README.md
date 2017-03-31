@@ -60,6 +60,3 @@ Run node bin/www to run the project.<br/>
 Feel free to contribute to the project.<br/>
 Create an issue if you find anything wrong with the project.
 <h2>Simply Fork, Clone and send Pull Request :)</h2>
-
-<h3>Screenshots</h3>
-![Alt text](/screenshots/Login.png?raw=true "Optional Title")
