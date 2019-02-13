@@ -1,4 +1,7 @@
 # Schmooze
+
+Note: I wrote this code like a million years ago 😛, it's old and crap, but it works 😎
+
 An real time multi-platform, multi-channel web app for online Discussion and Learning. The project is aimed to conduct the online group sessions for students  of the National Institute of Technology, Kurukshetra.
 <h2>The project have:</h2>
 
@@ -59,4 +62,3 @@ Run node bin/www to run the project.<br/>
 <h3>Contribute :)</h3>
 Feel free to contribute to the project.<br/>
 Create an issue if you find anything wrong with the project.
-<h2>Simply Fork, Clone and send Pull Request :)</h2>
